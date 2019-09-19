@@ -1,4 +1,4 @@
-# ATLAS (Authority on The Locations of ARENA Systems)
+# ATLAS (Authority on The Locations of ARENA Stuff)
 ATLAS will be like an aggregation of maps of major roadways. We intend that by using ATLAS, one can find any ARENA, though the details of scenes and processes we believe will be handled by other systems. The most typical usage of ATLAS would be to find an ARENA near one's own geo-location.
 
 ## The ATLAS-DNS Analogy
