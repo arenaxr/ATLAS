@@ -1,6 +1,6 @@
 module.exports = async (req, res, proceed) => {
-  console.log(req.ip);
-  if (req.ip === '127.0.0.1' || req.ip === '::1') {
+  const locals = ['::ffff:127.0.0.1', '127.0.0.1', '::1'];
+  if (locals.indexOf(req.ip) > -1) {
     return proceed();
   }
   return res.forbidden();
