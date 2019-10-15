@@ -13,7 +13,7 @@ module.exports = {
 
     //ltj: uuid is defined by RFC 4122. We don't expect to check, enforce
     //    or generate uuids, ATLAS just stores them, thus 'string' type
-    uuid: { type: 'string', required: false },
+    uuid: { type: 'string', required: true, unique: true },
     //ltj: TODO: tighten up position naming a bit, would prefer:
     //    pos.lat, pos.lon, pos.elev, with possible x,y,z aliases
     //   : Abstractly, spatial coords are meatspace location...
