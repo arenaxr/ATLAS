@@ -20,6 +20,7 @@ TODO:Add Mac invocation
 ### Install web app dependencies
 
 `cd atlas-web-app/`
+
 `npm install`
 
 ### Start web app
