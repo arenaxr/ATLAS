@@ -3,14 +3,27 @@ ATLAS will be like an aggregation of maps of major roadways. We intend that by u
 
 ## Usage
 
-### Install mongodb
+### Install MongoDB
 
+Comprehensive reference:
+https://docs.mongodb.com/manual/administration/install-community/
+Note: enterprise level mongodb is not necessary.
+
+One-liners:
 For a Mac w Brew:
 `brew install mongodb-community@4.2`
 
-Otherwise use Google-fu. Enterprise level mongodb is not necessary.
+### Start MongoDB server
 
-### Start Web App
+TODO:Add Mac invocation
+
+### Install web app dependencies
+
+`cd atlas-web-app/`
+`npm install`
+
+### Start web app
+
 ATLAS is a Sails web app. See `README.md` in `atlas-web-app/` for some more info and links about Sails.
 
 `cd atlas-web-app/`
