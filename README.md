@@ -9,13 +9,16 @@ Comprehensive reference:
 https://docs.mongodb.com/manual/administration/install-community/
 Note: enterprise level mongodb is not necessary.
 
-One-liners:
 For a Mac w Brew:
 `brew install mongodb-community@4.2`
 
 ### Start MongoDB server
 
-TODO:Add Mac invocation
+On Mac:
+
+`mongod -f /usr/local/etc/mongod.conf &`
+
+"&" is for starting in separate process from terminal.
 
 ### Install web app dependencies
 
@@ -68,4 +71,3 @@ These conclusions we have reached by collaboration and consensus, but are not qu
 - Luke will write server in Node.js
   - I (Luke) like learning new languages
   - Node.js comes with very handy modules for web server sorts of things
-  - Ivan is a *minor deity* in Node.js land
