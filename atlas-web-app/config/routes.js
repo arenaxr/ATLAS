@@ -19,8 +19,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  // '/': { view: 'pages/homepage' },
-  'GET /local/:uuid': { action: 'record/redirect-uuid' },
+  '/': { view: 'pages/homepage' },
+  '/create-record-form': { view: 'pages/create-record-form' },
 
   /***************************************************************************
   *                                                                          *
@@ -33,5 +33,6 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'GET /local/:uuid': { action: 'record/redirect-uuid' },
 
 };
