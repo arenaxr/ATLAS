@@ -34,8 +34,6 @@ ATLAS is a Sails web app. See `README.md` in `atlas-web-app/` for some more info
 
 `sails lift` #note: you will need to `npm install` node modules if this is your first run
 
-`alter` #there is no migrate setting chosen yet. Please type 'alter' and hit enter
-
 ### Populate test data
 Currently, I am still populating my own test data each time. Please see https://github.com/conix-center/ATLAS/blob/master/atlas-web-app/api/models/Record.js for the structure of an ATLAS record. Sails auto-gens a RESTful API from that `Record.js` file. The default routes work fine for us right now, but could use more syntactic sugga:
 
