@@ -3,3 +3,11 @@ body {
   background-color: #5f457a;
   font-family: "Lucida Console", Monaco, monospace;
 }
+
+a:link, a:visited {
+  color: #FF00FF;
+}
+
+a:link:active, a:visited:active {
+  color: #0000FF;
+}
