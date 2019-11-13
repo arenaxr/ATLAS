@@ -19,11 +19,15 @@ module.exports = {
       type: 'string',
       required: true,
       unique: true, 
+      isUUID: true,
+      // sy: NOTE: 'isUUID' and other validation functions protect db from
+      //           invalid data but do not cater to helping a user...
     },
 
     lat: { 
       type: 'number',
       required: false,
+      // sy: TODO: add custom validation that checks if number isGeoCoord
     },
 
     lon: {
@@ -31,7 +35,7 @@ module.exports = {
       required: false,
     },
 
-    elev: {
+    ele: {
       type: 'number',
       required: false,
     },
@@ -39,6 +43,7 @@ module.exports = {
     url: {
       type: 'string',
       required: false,
+      isURL: true,
     },
 
   },
