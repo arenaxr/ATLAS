@@ -1,13 +1,22 @@
 body {
   color: white;
-  background-color: #5f457a;
+  background-color: #133926;
   font-family: "Lucida Console", Monaco, monospace;
 }
 
-a:link, a:visited {
-  color: #FF00FF;
+a:link{
+  color: #ff0000;
 }
 
-a:link:active, a:visited:active {
-  color: #0000FF;
+a:visited {
+  color: #bb0000;
+}
+
+h1 {
+  color: black;
+  background-color: #8dd8b4;
+}
+
+h2 {
+  background-color: #0d261a;
 }
