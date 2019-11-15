@@ -21,6 +21,7 @@ module.exports.routes = {
 
   '/': { view: 'pages/homepage' },
   '/create-record-form': { view: 'pages/create-record-form' },
+  '/search-records-form': { view: 'pages/search-records-form' },
 
   /***************************************************************************
   *                                                                          *
