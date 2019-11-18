@@ -1,11 +1,93 @@
 <!--
 This is the Atlas default homepage.
-For more information, see:
+For more Sails information, see:
 • https://sailsjs.com/documentation/concepts/views
 • https://sailsjs.com/documentation/concepts/routes
 -->
 <a>ATLAS Home</a> <a>&gt;</a>
 
+<h1>
+CMU CyLab ARENA Portal
+</h1>
+
+<h2>
+Enter ARENA information:
+</h2>
+
+<form>
+Avatar Name:
+<br/>
+<input type="text" name="name">
+<br/>
+<br/>
+ARENA MQTT Server:
+<br/>
+<input type="text" name="mqttServer" value="oz.andrew.cmu.edu">
+<br/>
+<br/>
+Server Scene:
+<br/>
+<input type="text" name="scene" value="render">
+<br/>
+<br/>
+Environment Theme:
+<br/>
+<select name="theme">
+  <option value="starry">starry</option>
+  <option value="none">none</option>
+  <option value="osiris">osiris</option>
+  <option value="default">default</option>
+  <option value="contact">contact</option>
+  <option value="egypt">egypt</option>
+  <option value="checkerboard">checkerboard</option>
+  <option value="forest">forest</option>
+  <option value="goaland">goaland</option>
+  <option value="yavapai">yavapai</option>
+  <option value="goldmine">goldmine</option>
+  <option value="threetowers">threetowers</option>
+  <option value="poison">poison</option>
+  <option value="arches">arches</option>
+  <option value="tron">tron</option>
+  <option value="japan">japan</option>
+  <option value="dream">dream</option>
+  <option value="volcano">volcano</option>
+</select>
+<br/>
+<br/>
+<input type="submit" value="Enter VR" formaction="https://xr.andrew.cmu.edu/">
+<br/>
+-OR-
+<br/>
+<input type="submit" value="Enter AR" formaction="https://xr.andrew.cmu.edu/arena-xr/">
+</form>
+
+<h2>
+Sample VR Panoramas:
+</h2>
+
+<a href="https://xr.andrew.cmu.edu/?name=&theme=egypt&scene=nara&weather=none&mqttServer=oz.andrew.cmu.edu">
+Nara
+</a>
+<br/>
+<a href="https://xr.andrew.cmu.edu/arena-xr/?name=&theme=none&scene=waterfall&weather=none&mqttServer=oz.andrew.cmu.edu">
+Waterfall
+</a>
+<br/>
+<a href="https://xr.andrew.cmu.edu/arena-xr/?name=&theme=starry&scene=city&weather=none&mqttServer=oz.andrew.cmu.edu">
+City
+</a>
+<br/>
+<a href="https://xr.andrew.cmu.edu/arena-xr/?name=&theme=none&scene=beach&weather=none&mqttServer=oz.andrew.cmu.edu">
+Beach
+</a>
+<br/>
+<a href="https://xr.andrew.cmu.edu/arena-xr/?name=&theme=none&scene=kungfu&weather=none&mqttServer=oz.andrew.cmu.edu">
+KungFu
+</a>
+<br/>
+
+<!-- ATLAS part -->
+<!-- ====================================================================== -->
 <h1>
 CMU CyLab ATLAS Home
 </h1>
@@ -32,19 +114,6 @@ beacons and markers) with ARENA servers (realms) and scenes.
 <li><a>Update Record</a></li>
 <li><a>Destroy Record</a></li>
 </ul>
-
-<!-- sy: note: rn, this is more of a placeholder...
-we'll probably want to eventually have a separate page for just /go,
-but at the moment, I think the homepage being a bit of everything is good!
-p.s. doing a "include" of that separate page here would be good too!
--->
-<h2>
-<em>Enter</em> the CMU CyLab ARENA:
-</h2>
-
-<p>
-[placeholder for er's ARENA-core/go/index.html]
-</p>
 
 <h2>
 About Development
