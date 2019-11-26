@@ -11,6 +11,8 @@
  *                 RFC 4122 defines UUID
  */
 
+const util = require('util');
+
 module.exports = {
 
   attributes: {
@@ -47,6 +49,25 @@ module.exports = {
     },
 
   },
-
+  afterCreate: async (record, proceed) => {
+    let key = sails.config.custom.redis.geokey;
+    await sails.getDatastore('redis').leaseConnection(async (db) => {
+      await (util.promisify(db.geoadd).bind(db))(key, record.lat, record.long, record.id);
+    });
+    proceed();
+  },
+  afterUpdate: async (record, proceed) => {
+    let key = sails.config.custom.redis.geokey;
+    await sails.getDatastore('redis').leaseConnection(async (db) => {
+      await (util.promisify(db.geoadd).bind(db))(key, record.lat, record.long, record.id);
+    });
+    proceed();
+  },
+  beforeDestroy: async (record, proceed) => {
+    let key = sails.config.custom.redis.geokey;
+    await sails.getDatastore('redis').leaseConnection(async (db) => {
+      await (util.promisify(db.zrem).bind(db))(key, record.where.id);
+    });
+    proceed();
+  }
 };
-

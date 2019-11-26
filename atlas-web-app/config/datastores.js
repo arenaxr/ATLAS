@@ -52,6 +52,8 @@ module.exports.datastores = {
     url: 'mongodb://127.0.0.1:27017/atlas',
 
   },
-
-
+  redis: {
+    adapter: 'sails-redis',
+    url: 'redis://127.0.0.1:6379',
+  }
 };
