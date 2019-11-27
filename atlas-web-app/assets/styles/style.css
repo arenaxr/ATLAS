@@ -1,3 +1,5 @@
+/*TODO: combine styles that are the same but for diff elements */
+
 body {
   color: white;
   background-color: #133926;
@@ -15,6 +17,16 @@ a:link {
 
 a:visited {
   color: #ff0000;
+}
+
+button {
+  background-color: #0d261a;
+  text-decoration: underline;
+  color: #ff0000;
+}
+
+form {
+  background-color: #0d261a;
 }
 
 input[type=submit] {

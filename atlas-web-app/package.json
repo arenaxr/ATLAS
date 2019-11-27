@@ -9,11 +9,13 @@
     "@sailshq/lodash": "^3.10.4",
     "@sailshq/socket.io-redis": "^5.2.0",
     "grunt": "1.0.4",
+    "requirejs": "^2.3.6",
     "sails": "^1.2.3",
     "sails-hook-grunt": "^4.0.0",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^2.0.0",
-    "sails-mongo": "^1.0.1"
+    "sails-mongo": "^1.0.1",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "eslint": "5.16.0"

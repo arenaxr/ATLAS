@@ -14,10 +14,10 @@ Please fill out this form and submit:
 </h2>
 
 <form action="/record/create">
-<br/>
 UUID:
 <br/>
-<input type="text" name="uuid" placeholder="REQUIRED!" required>
+<input type="text" name="uuid" id="get_uuid_dst" placeholder="REQUIRED!" required> 
+<!--FIXME: <button type="Button" onclick="getElementById('get_uuid_dst').innerHTML = sails.uuidv4();">Get UUID</button>-->
 <br/>
 <br/>
 URL:
