@@ -14,24 +14,24 @@
 module.exports = {
 
   attributes: {
-
+    /*
     uuid: {
       type: 'string',
       required: true,
-      unique: true, 
+      unique: true,
       isUUID: true,
       // sy: NOTE: 'isUUID' and other validation functions protect db from
       //           invalid data but do not cater to helping a user...
     },
-
-    lat: { 
+    */
+    lat: {
       type: 'number',
       required: false,
       // sy: TODO: add custom validation that checks if number isGeoCoord
     },
 
     lon: {
-      type: 'number', 
+      type: 'number',
       required: false,
     },
 
