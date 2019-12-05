@@ -8,8 +8,8 @@ module.exports = {
 
 
   inputs: {
-    uuid: {
-      description: 'The UUID to look up',
+    id: {
+      description: 'The ID to look up',
       type: 'string',
       required: true
     }
@@ -24,9 +24,13 @@ module.exports = {
   },
 
 
-  fn: async function ({uuid}) {
-    let record = await Record.findOne({ uuid: uuid });
-    if (!record) { throw 'notFound'; }
+  fn: async function ({id}, exits) {
+    let record = await Record.findOne({ id: id });
+    if (!record) {
+      return exits.notFound({
+        error: 'No ATLAS record with the specified ID was found in the database.'
+      });
+    }
     this.res.redirect(record.url);
   }
 
