@@ -1,0 +1,30 @@
+<!--
+Periodically revisit validation/sanitation needs for this form. See:
+https://github.com/conix-center/ATLAS/issues/1
+-->
+
+<a href="/">ATLAS Home</a> <a>/</a> <a>Advanced Search Records</a> <a>&gt;</a>
+
+<h1>
+Advanced Search ATLAS Records
+</h1>
+
+<h2>
+Please enter valid Waterline query language:
+</h2>
+
+<form action="/record">
+<a href="https://sailsjs.com/documentation/reference/blueprint-api/find-where">
+find API & where clause reference
+</a>
+<br/>
+where:
+<br/>
+<!-- TODO: ltj: add more helpful example, like: '{"url":{"contains":"espn"}}'
+                this probably includes making input size to window...  -->
+<input type="text" name="where" placeholder="JSON" required>
+<br/>
+<br/>
+<input type="submit" value="submit">
+<!-- TODO: ltj: add sorting/pagination fields.. -->
+</form>

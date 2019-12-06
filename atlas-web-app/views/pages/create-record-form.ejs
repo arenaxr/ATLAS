@@ -1,0 +1,44 @@
+<!--
+Periodically revisit validation needs for this form. See:
+https://github.com/conix-center/ATLAS/issues/1
+-->
+
+<a href="/">ATLAS Home</a> <a>/</a> <a>Create Record Form</a> <a>&gt;</a>
+
+<h1>
+Create New ATLAS Record
+</h1>
+
+<h2>
+Please fill out this form and submit:
+</h2>
+
+<form action="/record/create">
+UUID:
+<br/>
+<input type="text" name="uuid" id="get_uuid_dst" placeholder="REQUIRED!" required> 
+<!--FIXME: <button type="Button" onclick="getElementById('get_uuid_dst').innerHTML = sails.uuidv4();">Get UUID</button>-->
+<br/>
+<br/>
+URL:
+<br/>
+<input type="text" name="url">
+<br/>
+<br/>
+Latitude:
+<br/>
+<input type="text" name="lat">
+<br/>
+<br/>
+Longitude:
+<br/>
+<input type="text" name="lon">
+<br/>
+<br/>
+Elevation:
+<br/>
+<input type="text" name="ele">
+<br/>
+<br/>
+<input type="submit" value="submit">
+</form>
