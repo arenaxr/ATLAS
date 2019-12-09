@@ -29,12 +29,15 @@ module.exports = {
     lat: {
       type: 'number',
       required: false,
-      // sy: TODO: add custom validation that checks if number isGeoCoord
+      min: -90,
+      max: 90
     },
 
-    lon: {
+    long: {
       type: 'number',
       required: false,
+      min: -180,
+      max: 180
     },
 
     ele: {
@@ -56,6 +59,7 @@ module.exports = {
     });
     proceed();
   },
+
   afterUpdate: async (record, proceed) => {
     let key = sails.config.custom.redis.geokey;
     await sails.getDatastore('redis').leaseConnection(async (db) => {
@@ -63,6 +67,7 @@ module.exports = {
     });
     proceed();
   },
+
   beforeDestroy: async (record, proceed) => {
     let key = sails.config.custom.redis.geokey;
     await sails.getDatastore('redis').leaseConnection(async (db) => {
@@ -70,6 +75,7 @@ module.exports = {
     });
     proceed();
   },
+
   mergeGeoResults: async (geoArr, units, ignore) => {
     let ids = [];
     let distances = {};

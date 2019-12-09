@@ -1,10 +1,10 @@
 module.exports = {
 
 
-  friendlyName: 'Redirect by UUID',
+  friendlyName: 'Redirect by ID',
 
 
-  description: 'Looks up an ATLAS record by UUID and HTTP redirects to its URL',
+  description: 'Looks up an ATLAS record by ID and HTTP redirects to its URL',
 
 
   inputs: {

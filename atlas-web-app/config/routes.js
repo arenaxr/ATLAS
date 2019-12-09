@@ -37,6 +37,4 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  'GET /local/:uuid': { action: 'record/redirect-uuid' },
-
 };
