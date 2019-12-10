@@ -11,28 +11,33 @@
  *                 RFC 4122 defines UUID
  */
 
+const util = require('util');
+
 module.exports = {
 
   attributes: {
-
+    /*
     uuid: {
       type: 'string',
       required: true,
-      unique: true, 
+      unique: true,
       isUUID: true,
       // sy: NOTE: 'isUUID' and other validation functions protect db from
       //           invalid data but do not cater to helping a user...
     },
-
-    lat: { 
+    */
+    lat: {
       type: 'number',
       required: false,
-      // sy: TODO: add custom validation that checks if number isGeoCoord
+      min: -90,
+      max: 90
     },
 
-    lon: {
-      type: 'number', 
+    long: {
+      type: 'number',
       required: false,
+      min: -180,
+      max: 180
     },
 
     ele: {
@@ -47,6 +52,44 @@ module.exports = {
     },
 
   },
+  afterCreate: async (record, proceed) => {
+    let key = sails.config.custom.redis.geokey;
+    await sails.getDatastore('redis').leaseConnection(async (db) => {
+      await (util.promisify(db.geoadd).bind(db))(key, record.lat, record.long, record.id);
+    });
+    proceed();
+  },
 
+  afterUpdate: async (record, proceed) => {
+    let key = sails.config.custom.redis.geokey;
+    await sails.getDatastore('redis').leaseConnection(async (db) => {
+      await (util.promisify(db.geoadd).bind(db))(key, record.lat, record.long, record.id);
+    });
+    proceed();
+  },
+
+  beforeDestroy: async (record, proceed) => {
+    let key = sails.config.custom.redis.geokey;
+    await sails.getDatastore('redis').leaseConnection(async (db) => {
+      await (util.promisify(db.zrem).bind(db))(key, record.where.id);
+    });
+    proceed();
+  },
+
+  mergeGeoResults: async (geoArr, units, ignore) => {
+    let ids = [];
+    let distances = {};
+    for (let i = 0, len = geoArr.length; i < len; i++) {
+      if (geoArr[i][0] === ignore) { continue; }
+      ids.push(geoArr[i][0]);
+      distances[geoArr[i][0]] = geoArr[i][1];
+    }
+    let mongoRecords = await Record.find({
+      id: ids
+    });
+    for (let i = 0, len = mongoRecords.length; i < len; i++) {
+      mongoRecords[i].distance = distances[mongoRecords[i].id] + ' ' + units;
+    }
+    return mongoRecords;
+  }
 };
-

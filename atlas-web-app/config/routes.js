@@ -22,6 +22,9 @@ module.exports.routes = {
   '/': { view: 'pages/homepage' },
   '/create-record-form': { view: 'pages/create-record-form' },
   '/search-records-form': { view: 'pages/search-records-form' },
+  'GET /redirect/:id': { action: 'record/redirect-id' },
+  'GET /lookup/geo': { action: 'record/geo-radius' },
+  'GET /lookup/prox/:id': { action: 'record/id-radius' },
 
   /***************************************************************************
   *                                                                          *
@@ -33,7 +36,5 @@ module.exports.routes = {
   * not match any of those, it is matched against static assets.             *
   *                                                                          *
   ***************************************************************************/
-
-  'GET /local/:uuid': { action: 'record/redirect-uuid' },
 
 };
