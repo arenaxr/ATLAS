@@ -1,5 +1,7 @@
 # ATLAS (Authority on The Locations of ARENA Stuff)
+
 ATLAS will be like an aggregation of maps of major roadways. We intend that by using ATLAS, one can find any ARENA, though the details of scenes and processes we believe will be handled by other systems. The most typical usage of ATLAS would be to find an ARENA near one's own geo-location.
+
 
 ## Usage
 
@@ -12,6 +14,7 @@ Note: enterprise level mongodb is not necessary.
 For a Mac w Brew:
 `brew install mongodb-community@4.2`
 
+
 ### Start MongoDB server
 
 On Mac:
@@ -19,6 +22,18 @@ On Mac:
 `mongod -f /usr/local/etc/mongod.conf &`
 
 "&" is for starting in separate process from terminal.
+
+
+### Install redis
+
+For a Mac w Brew:
+`brew install redis`
+
+
+### Start redis
+
+`redis-server /usr/local/etc/redis.conf`
+
 
 ### Install web app dependencies
 
