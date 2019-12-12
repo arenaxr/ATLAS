@@ -1,0 +1,35 @@
+
+<!--<script>
+function requestAtlasRecordDestroy(id) {
+  var url = "/record/";
+  var xhr = new XMLHttpRequest();
+  xhr.open("DELETE", url+id, true);
+  xhr.onload = function () {
+    var users = JSON.parse(xhr.responseText);
+    if (xhr.readyState == 4 && xhr.status == "200") {
+      console.table(users);
+    } else {
+      console.error(users);
+    }
+  xhr.send(null);
+}
+</script>-->
+
+<a href="../">ATLAS Home</a> <a>/</a> <a>Destroy Record Form</a> <a>&gt;</a>
+
+<h1>
+    Destroy ATLAS Record
+</h1>
+
+<h2>
+    Please fill out this form and submit:
+</h2>
+
+<form>
+    ID:
+    <br/>
+    <input type="text" name="id" id="id-field" placeholder="REQUIRED!" required>
+    <!--TODO: insert alert-style confirmation before destruction of record-->
+    <button type="Button" onclick="requestDestroyAtlasRecord(document.getElementById('id-field').value);">Destroy Record!</button>
+    <!--POC: <button type="Button" onclick="alert(document.getElementById('id-field').value);">Echo ID!</button>-->
+</form>

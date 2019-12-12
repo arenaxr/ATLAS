@@ -22,6 +22,8 @@ module.exports.routes = {
   '/': { view: 'pages/homepage' },
   '/create-record-form': { view: 'pages/create-record-form' },
   '/search-records-form': { view: 'pages/search-records-form' },
+  '/destroy-record-form': { view: 'pages/destroy-record-form' },
+
   'GET /redirect/:id': { action: 'record/redirect-id' },
   'GET /lookup/geo': { action: 'record/geo-radius' },
   'GET /lookup/prox/:id': { action: 'record/id-radius' },
