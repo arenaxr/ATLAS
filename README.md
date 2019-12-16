@@ -29,6 +29,8 @@ On Mac:
 For a Mac w Brew:
 `brew install redis`
 
+For Windows, see:
+https://redislabs.com/blog/redis-on-windows-10/
 
 ### Start redis
 
