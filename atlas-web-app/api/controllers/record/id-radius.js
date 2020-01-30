@@ -23,11 +23,20 @@ module.exports = {
       type: 'string',
       defaultsTo: 'm',
       isIn: ['m', 'km', 'ft', 'mi']
+    },
+    raw: {
+      description: 'Return results as raw json',
+      type: 'boolean',
+      defaultsTo: false
     }
   },
 
 
   exits: {
+    viewSuccess: {
+      responseType: 'view',
+      viewTemplatePath: 'pages/results'
+    },
     notFound: {
       description: 'No ATLAS record with the specified ID was found in the database.',
       responseType: 'notFound'
@@ -44,6 +53,11 @@ module.exports = {
     await sails.getDatastore('redis').leaseConnection(async (db) => {
       results = await (util.promisify(db.georadiusbymember).bind(db))(key, inputs.id, inputs.distance, inputs.units, 'WITHDIST', 'COUNT', 20, 'ASC');
     });
-    return await Record.mergeGeoResults(results, inputs.units, inputs.id);
+    let geoMergedResults = await Record.mergeGeoResults(results, inputs.units, inputs.id);
+    if (inputs.raw) {
+      return geoMergedResults;
+    } else {
+      throw { viewSuccess: { results: geoMergedResults} };
+    }
   }
 };
