@@ -26,6 +26,11 @@ module.exports = {
       //           invalid data but do not cater to helping a user...
     },
     */
+    name: {
+      type: 'string',
+      required: true,
+    },
+
     lat: {
       type: 'number',
       required: false,
@@ -47,7 +52,7 @@ module.exports = {
 
     url: {
       type: 'string',
-      required: false,
+      required: true,
       isURL: true,
     },
 
