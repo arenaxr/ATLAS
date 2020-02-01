@@ -248,9 +248,13 @@ For more Sails information, see:
                      const response = await fetch(url);
                      const jsonResponse = await response.json();
                      modalTable.innerHTML = '';
-                     for (let i = 0, responses = jsonResponse.length; i < responses; i++) {
-                        let row = `<tr><td><a href="${jsonResponse[i].url}">${jsonResponse[i].id}</a></td><td>${jsonResponse[i].distance}</td></tr>`;
-                        modalTable.insertAdjacentHTML('beforeend', row);
+                     if (jsonResponse.length === 0) {
+                       modalTable.innerHTML = '<tr><td>No entries found within specified radius</td></tr>';
+                     } else {
+                         for (let i = 0, responses = jsonResponse.length; i < responses; i++) {
+                            let row = `<tr><td><a href="${jsonResponse[i].url}">${jsonResponse[i].id}</a></td><td>${jsonResponse[i].distance}</td></tr>`;
+                            modalTable.insertAdjacentHTML('beforeend', row);
+                         }
                      }
                      openModal('geo_results');
                  } catch (err) {
