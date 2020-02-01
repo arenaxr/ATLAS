@@ -152,9 +152,6 @@ For more Sails information, see:
     </p>
 
     <a href="https://github.com/conix-center/">https://github.com/conix-center/</a>
-
-    <!-- ltj: TODO: delete for prod -->
-    <!-- ltj: TODO: investigate if there are auto ways to take stuff out of prod env -->
     <br>
 </div>
 <div class="modal" id="geo_results">
@@ -248,7 +245,7 @@ For more Sails information, see:
                        modalTable.innerHTML = '<tr><td>No entries found within specified radius</td></tr>';
                      } else {
                          for (let i = 0, responses = jsonResponse.length; i < responses; i++) {
-                            let row = `<tr><td><a href="${jsonResponse[i].url}">${jsonResponse[i].id}</a></td><td>${jsonResponse[i].distance}</td></tr>`;
+                            let row = `<tr><td><a href="${jsonResponse[i].url}">${jsonResponse[i].name}</a></td><td>${jsonResponse[i].distance}</td></tr>`;
                             modalTable.insertAdjacentHTML('beforeend', row);
                          }
                      }
