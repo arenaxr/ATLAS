@@ -19,7 +19,11 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/homepage' },
+  '/': { view: 'pages/landing-geo-loc-near' },
+  '/home': { view: 'pages/homepage' },
+  '/portal': { view: 'pages/portal' },
+  '/about': { view: 'pages/about' },
+  '/manage': { view: 'pages/manage' },
   '/create-record-form': { view: 'pages/create-record-form' },
   '/search-records-form': { view: 'pages/search-records-form' },
   '/destroy-record-form': { view: 'pages/destroy-record-form' },
