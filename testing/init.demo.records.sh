@@ -10,9 +10,9 @@
 curl 'http://localhost:1337/record/create?id=0c400685-9a83-448d-8a93-62743661f287&name=cylab-render&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=render%26theme=starry'
 curl 'http://localhost:1337/record/create?id=64e69e91-8074-4a3b-80aa-acd7f64307b0&name=cylab-earth&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=earth%26theme=starry'
 curl 'http://localhost:1337/record/create?id=af3f5976-e179-4427-9763-51222f978854&name=cylab-guac&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=guac%26theme=starry'
-curl 'http://localhost:1337/record/create?id=10af374b-e078-46c4-89a1-9e81ceb85954&name=cylab-guac&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=heads%26theme=starry'
-curl 'http://localhost:1337/record/create?id=cd7ff303-165a-4dd8-871d-0f800d0a05a8&name=cylab-guac&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=piano%26theme=starry'
-curl 'http://localhost:1337/record/create?id=afbc80da-ef0e-4f9f-813a-7f4c9d8ed796&name=cylab-guac&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=northstar%26theme=starry'
+curl 'http://localhost:1337/record/create?id=10af374b-e078-46c4-89a1-9e81ceb85954&name=cylab-heads&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=heads%26theme=starry'
+curl 'http://localhost:1337/record/create?id=cd7ff303-165a-4dd8-871d-0f800d0a05a8&name=cylab-piano&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=piano%26theme=starry'
+curl 'http://localhost:1337/record/create?id=afbc80da-ef0e-4f9f-813a-7f4c9d8ed796&name=cylab-northstar&lat=40.444318&long=-79.946544&ele=300&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=northstar%26theme=starry'
 
 #------------------------------------------------------------------------------
 # physical markers
