@@ -1,1 +1,37 @@
-//TODO: copy create-record-form, but have column 1 for Current Value and column 2 with form blanks for new value
+<!-- TODO: replace w autogen version of pseudo filesystem header -->
+<a href="/home">ATLAS Home</a> <a>/</a> <a href="manage">ATLAS Management</a> <a>/</a> <a>Find & Update Record</a> <a>&gt;</a>
+
+<h1>
+    Find Record and Update
+</h1>
+
+<form>
+    ID:
+    <br/>
+    <input type="text" name="id" id="id-field" required>
+    <button type="Button" onclick="populateUpdateRecordForm(document.getElementById('id-field').value);">Find Record</button>
+</form>
+
+<div id="error-section" style="display:none;color:red">
+  <p id="error-message">no_error</p>
+</div>
+
+<div style="display:none">
+<!-- FIXME : duplicated in create-record-form.ejs. Pull out to separate file -->
+<!-- TODO: copy-pasted create-record-form, but have "placeholder" be current value -->
+<form action="record" method="post">
+    ID:<br/>
+    <input type="text" name="id" id="id" placeholder="REQUIRED!" required><br/><br/>
+    Name:<br/>
+    <input type="text" name="name"><br/><br/>
+    URL:<br/>
+    <input type="text" name="url"><br/><br/>
+    Latitude:<br/>
+    <input type="text" name="lat"><br/><br/>
+    Longitude:<br/>
+    <input type="text" name="long"><br/><br/>
+    Elevation:<br/>
+    <input type="text" name="ele"><br/><br/>
+    <input type="submit" value="submit">
+</form>
+</div>
