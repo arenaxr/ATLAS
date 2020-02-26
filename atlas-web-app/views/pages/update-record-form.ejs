@@ -64,6 +64,7 @@
         var input_long = document.getElementById('update-form-input-long');
         var input_ele = document.getElementById('update-form-input-ele');
 
+
         // ["Zero out" update form]
         input_id.placeholder = "";
         input_name.placeholder = "";
@@ -76,6 +77,10 @@
         update_form.style = "display:none";
         find_form.style = "display:block";
 
+        // [Clear error message and hide]
+        error_message.innerHTML = "no_error";
+        error_section.style = "display:none; color:red";
+
     }
 
     function is_value_empty(input_elem) {
@@ -86,6 +91,7 @@
 
     }
 
+// TODO : could use heavier testing. def. for invalid updates requested!! --ltj
     function updateRecord() {
         // [Grab relevant elements for readability]
         var find_form = document.getElementById('div-find-form');
@@ -157,7 +163,8 @@
 // TODO : branch taken if Atlas rejects modifications, possibly? --ltj
                 // [Set error message and display]
                 error_message.innerHTML =
-                    "Update was rejected [placeholder: insert reason]";
+                    "Update rejected. Please ensure proper formatting of " +
+                     "modified fields!";
                 error_section.style = "display:block; color:red";
             }
         };
