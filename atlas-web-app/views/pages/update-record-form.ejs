@@ -1,4 +1,3 @@
-
 <script>
     function populateUpdateRecordForm(id) {
         // [Grab relevant elements for readability]
@@ -78,6 +77,95 @@
         find_form.style = "display:block";
 
     }
+
+    function is_value_empty(input_elem) {
+        if (input_elem.value.length == 0) {
+            return true;
+        }
+        return false;
+
+    }
+
+    function updateRecord() {
+        // [Grab relevant elements for readability]
+        var find_form = document.getElementById('div-find-form');
+
+        var error_section = document.getElementById('error-section');
+        var error_message = document.getElementById('error-message');
+
+        var update_form = document.getElementById('div-update-form');
+        var input_id = document.getElementById('update-form-input-id');
+        var input_name = document.getElementById('update-form-input-name');
+        var input_url = document.getElementById('update-form-input-url');
+        var input_lat = document.getElementById('update-form-input-lat');
+        var input_long = document.getElementById('update-form-input-long');
+        var input_ele = document.getElementById('update-form-input-ele');
+
+        // [Clear error message and hide]
+        error_message.innerHTML = "no_error";
+        error_section.style = "display:none; color:red";
+
+        // [Throw error & exit if no changes have been requested]
+        if (
+          is_value_empty(input_name) && is_value_empty(input_url) &&
+          is_value_empty(input_lat) && is_value_empty(input_long) &&
+          is_value_empty(input_ele)
+        ) {
+            error_message.innerHTML = "Change at least one field to update the record";
+            error_section.style = "display:block; color:red";
+            return;
+        }
+
+
+        // [Construct JSON string of patches entered]
+        var patches_json = " {"
+        if (!is_value_empty(input_name)) {
+            patches_json += "\n\t\"name\": \"" + input_name.value + "\"";
+        }
+        if (!is_value_empty(input_url)) {
+            patches_json += "\n\t\"url\": \"" + input_url.value + "\"";
+        }
+        if (!is_value_empty(input_lat)) {
+            patches_json += "\n\t\"lat\": \"" + input_lat.value + "\"";
+        }
+        if (!is_value_empty(input_long)) {
+            patches_json += "\n\t\"long\": \"" + input_long.value + "\"";
+        }
+        if (!is_value_empty(input_ele)) {
+            patches_json += "\n\t\"ele\": \"" + input_ele.value + "\"";
+        }
+        patches_json += "\n}";
+
+        // [Update existing record in place]
+        var xhr = new XMLHttpRequest();
+        xhr.open('PATCH', '/record/' + input_id.placeholder);
+
+        xhr.onload = function () {
+            var record = JSON.parse(xhr.responseText);
+            if (xhr.readyState == 4 && xhr.status == '200') {
+                // [Hide find form & update form]
+                find_form.style = "display:none";
+                update_form.style = "display:none";
+
+                // [Set std-error message and display]
+// TODO : put new record data here?
+                error_message.innerHTML =
+                    "Update success!";
+                error_section.style = "display:block; color:green";
+
+            } else {
+// TODO : branch taken if Atlas rejects modifications, possibly? --ltj
+                // [Set error message and display]
+                error_message.innerHTML =
+                    "Update was rejected [placeholder: insert reason]";
+                error_section.style = "display:block; color:red";
+            }
+        };
+
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(patches_json);
+
+    }
 </script>
 
 <!-- TODO: replace w autogen version of pseudo filesystem header -->
@@ -124,6 +212,6 @@
     Elevation:<br/>
     <input type="text" name="ele" id="update-form-input-ele"><br/><br/>
     <button type="button" onclick="cancelUpdate()">Cancel</button>
-    <input type="submit" value="Update Record">
+    <button type="button" onclick="updateRecord()">Update Record</button>
 </form>
 </div>
