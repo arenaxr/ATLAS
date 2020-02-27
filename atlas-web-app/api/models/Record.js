@@ -1,5 +1,5 @@
-// Periodically revisit validation for this model, per this:
-// https://github.com/conix-center/ATLAS/issues/1
+// TODO : Periodically revisit validation for this model, per this:
+// todo   https://github.com/conix-center/ATLAS/issues/1 --ltj
 
 /**
  * Record.js
@@ -16,19 +16,16 @@ const util = require('util');
 module.exports = {
 
   attributes: {
-    /*
-    uuid: {
-      type: 'string',
-      required: true,
-      unique: true,
-      isUUID: true,
-      // sy: NOTE: 'isUUID' and other validation functions protect db from
-      //           invalid data but do not cater to helping a user...
-    },
-    */
+
     name: {
       type: 'string',
       required: true,
+    },
+
+    url: {
+      type: 'string',
+      required: true,
+      isURL: true,
     },
 
     lat: {
@@ -50,10 +47,9 @@ module.exports = {
       required: false,
     },
 
-    url: {
-      type: 'string',
-      required: true,
-      isURL: true,
+    pose: {
+      type: 'json',
+      required: false,
     },
 
   },

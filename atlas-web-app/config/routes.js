@@ -26,6 +26,7 @@ module.exports.routes = {
   '/manage': { view: 'pages/manage' },
   '/create-record-form': { view: 'pages/create-record-form' },
   '/search-records-form': { view: 'pages/search-records-form' },
+  '/update-record-form': { view: 'pages/update-record-form'},
   '/destroy-record-form': { view: 'pages/destroy-record-form' },
   '/landing-geo-loc-near': { view: 'pages/landing-geo-loc-near' },
 

@@ -1,0 +1,234 @@
+<script>
+    function populateUpdateRecordForm(id) {
+        // [Grab relevant elements for readability]
+        var find_form = document.getElementById('div-find-form');
+
+        var error_section = document.getElementById('error-section');
+        var error_message = document.getElementById('error-message');
+
+        var update_form = document.getElementById('div-update-form');
+        var input_id = document.getElementById('update-form-input-id');
+        var input_name = document.getElementById('update-form-input-name');
+        var input_url = document.getElementById('update-form-input-url');
+        var input_lat = document.getElementById('update-form-input-lat');
+        var input_long = document.getElementById('update-form-input-long');
+        var input_ele = document.getElementById('update-form-input-ele');
+        var input_pose = document.getElementById('update-form-input-pose');
+
+        // [Clear error message and hide]
+        error_message.innerHTML = "no_error";
+        error_section.style = "display:none; color:red";
+
+        // [Get record and display in update form]
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/record/' + id);
+        xhr.onload = function () {
+            var records = JSON.parse(xhr.responseText);
+            if (xhr.readyState == 4 && xhr.status == '200') {
+                // [Load update form with current record values]
+                input_id.placeholder = records.id;
+                input_name.placeholder = records.name;
+                input_url.placeholder = records.url;
+                input_lat.placeholder = records.lat;
+                input_long.placeholder = records.long;
+                input_ele.placeholder = records.ele;
+                input_pose.placeholder = records.pose;
+
+                // [Hide find form, unhide update form and cancel button]
+                find_form.style = "display:none";
+                update_form.style = "display:block";
+
+            } else {
+                // [Set error message and display]
+                error_message.innerHTML =
+                  "Record not found. Perhaps the ID is incorrect?";
+
+// TODO : consider adding some helpful bits here, such as:
+// todo   * find similar records
+// todo   * create record with given id (if conformant to UUIDv?)
+
+                error_section.style = "display:block; color:red";
+            }
+        };
+
+        xhr.send(null);
+    }
+
+    function cancelUpdate() {
+        // [Grab relevant elements for readability]
+        var find_form = document.getElementById('div-find-form');
+
+        var update_form = document.getElementById('div-update-form');
+        var input_id = document.getElementById('update-form-input-id');
+        var input_name = document.getElementById('update-form-input-name');
+        var input_url = document.getElementById('update-form-input-url');
+        var input_lat = document.getElementById('update-form-input-lat');
+        var input_long = document.getElementById('update-form-input-long');
+        var input_ele = document.getElementById('update-form-input-ele');
+        var input_pose = document.getElementById('update-form-input-pose');
+
+
+        // ["Zero out" update form]
+        input_id.placeholder = "";
+        input_name.placeholder = "";
+        input_url.placeholder = "";
+        input_lat.placeholder = "";
+        input_long.placeholder = "";
+        input_ele.placeholder = "";
+        input_pose.placeholder = "";
+
+        // [hide update form, unhide find form]
+        update_form.style = "display:none";
+        find_form.style = "display:block";
+
+        // [Clear error message and hide]
+        error_message.innerHTML = "no_error";
+        error_section.style = "display:none; color:red";
+
+    }
+
+    function is_value_empty(input_elem) {
+        if (input_elem.value.length == 0) {
+            return true;
+        }
+        return false;
+
+    }
+
+// TODO : could use heavier testing. def. for invalid updates requested!! --ltj
+    function updateRecord() {
+        // [Grab relevant elements for readability]
+        var find_form = document.getElementById('div-find-form');
+
+        var error_section = document.getElementById('error-section');
+        var error_message = document.getElementById('error-message');
+
+        var update_form = document.getElementById('div-update-form');
+        var input_id = document.getElementById('update-form-input-id');
+        var input_name = document.getElementById('update-form-input-name');
+        var input_url = document.getElementById('update-form-input-url');
+        var input_lat = document.getElementById('update-form-input-lat');
+        var input_long = document.getElementById('update-form-input-long');
+        var input_ele = document.getElementById('update-form-input-ele');
+        var input_pose = document.getElementById('update-form-input-pose');
+
+        // [Clear error message and hide]
+        error_message.innerHTML = "no_error";
+        error_section.style = "display:none; color:red";
+
+        // [Throw error & exit if no changes have been requested]
+        if (
+          is_value_empty(input_name) && is_value_empty(input_url) &&
+          is_value_empty(input_lat) && is_value_empty(input_long) &&
+          is_value_empty(input_ele) && is_value_empty(input_pose)
+        ) {
+            error_message.innerHTML = "Change at least one field to update the record";
+            error_section.style = "display:block; color:red";
+            return;
+        }
+
+
+        // [Construct JSON string of patches entered]
+        var patches_json = " {"
+        if (!is_value_empty(input_name)) {
+            patches_json += "\n\t\"name\": \"" + input_name.value + "\"";
+        }
+        if (!is_value_empty(input_url)) {
+            patches_json += "\n\t\"url\": \"" + input_url.value + "\"";
+        }
+        if (!is_value_empty(input_lat)) {
+            patches_json += "\n\t\"lat\": \"" + input_lat.value + "\"";
+        }
+        if (!is_value_empty(input_long)) {
+            patches_json += "\n\t\"long\": \"" + input_long.value + "\"";
+        }
+        if (!is_value_empty(input_ele)) {
+            patches_json += "\n\t\"ele\": \"" + input_ele.value + "\"";
+        }
+        if (!is_value_empty(input_pose)) {
+            patches_json += "\n\t\"pose\": \"" + input_pose.value + "\"";
+        }
+        patches_json += "\n}";
+
+        // [Update existing record in place]
+        var xhr = new XMLHttpRequest();
+        xhr.open('PATCH', '/record/' + input_id.placeholder);
+
+        xhr.onload = function () {
+            var record = JSON.parse(xhr.responseText);
+            if (xhr.readyState == 4 && xhr.status == '200') {
+                // [Hide find form & update form]
+                find_form.style = "display:none";
+                update_form.style = "display:none";
+
+                // [Set std-error message and display]
+// TODO : put new record data here?
+                error_message.innerHTML =
+                    "Update success!";
+                error_section.style = "display:block; color:green";
+
+            } else {
+// TODO : branch taken if Atlas rejects modifications, possibly? --ltj
+                // [Set error message and display]
+                error_message.innerHTML =
+                    "Update rejected. Please ensure proper formatting of " +
+                     "modified fields!";
+                error_section.style = "display:block; color:red";
+            }
+        };
+
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(patches_json);
+
+    }
+</script>
+
+<!-- TODO: replace w autogen version of pseudo filesystem header -->
+<a href="/home">ATLAS Home</a> <a>/</a> <a href="manage">ATLAS Management</a> <a>/</a> <a>Find & Update Record</a> <a>&gt;</a>
+
+<h1>
+    Find Record and Update
+</h1>
+
+<div id="div-find-form" style="display:block">
+<form>
+    ID:
+    <br/>
+    <input type="text" name="id" id="find-form-input-id" required>
+
+    <button
+      type="button"
+      onclick="populateUpdateRecordForm(
+               document.getElementById('find-form-input-id').value);"
+    >
+    Find Record
+    </button>
+
+</form>
+</div>
+
+<!-- TODO : take "color" out of div since it has to be repeated in js above -->
+<div id="error-section" style="display:none;color:red">
+  <p id="error-message">no_error</p>
+</div>
+
+<div id="div-update-form" style="display:none">
+<form action="record" method="post">
+    ID:<br/>
+    <input type="text" name="id" id="update-form-input-id" disabled><br/><br/>
+    Name:<br/>
+    <input type="text" name="name" id="update-form-input-name"><br/><br/>
+    URL:<br/>
+    <input type="text" name="url" id="update-form-input-url"><br/><br/>
+    Latitude:<br/>
+    <input type="text" name="lat" id="update-form-input-lat"><br/><br/>
+    Longitude:<br/>
+    <input type="text" name="long" id="update-form-input-long"><br/><br/>
+    Elevation:<br/>
+    <input type="text" name="ele" id="update-form-input-ele"><br/><br/>
+    Pose:<br/>
+    <input type="text" name="pose" id="update-form-input-pose"><br/><br/>
+    <button type="button" onclick="cancelUpdate()">Cancel</button>
+    <button type="button" onclick="updateRecord()">Update Record</button>
+</form>
+</div>
