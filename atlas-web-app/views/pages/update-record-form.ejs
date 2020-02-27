@@ -13,6 +13,7 @@
         var input_lat = document.getElementById('update-form-input-lat');
         var input_long = document.getElementById('update-form-input-long');
         var input_ele = document.getElementById('update-form-input-ele');
+        var input_pose = document.getElementById('update-form-input-pose');
 
         // [Clear error message and hide]
         error_message.innerHTML = "no_error";
@@ -31,6 +32,7 @@
                 input_lat.placeholder = records.lat;
                 input_long.placeholder = records.long;
                 input_ele.placeholder = records.ele;
+                input_pose.placeholder = records.pose;
 
                 // [Hide find form, unhide update form and cancel button]
                 find_form.style = "display:none";
@@ -63,6 +65,7 @@
         var input_lat = document.getElementById('update-form-input-lat');
         var input_long = document.getElementById('update-form-input-long');
         var input_ele = document.getElementById('update-form-input-ele');
+        var input_pose = document.getElementById('update-form-input-pose');
 
 
         // ["Zero out" update form]
@@ -72,6 +75,7 @@
         input_lat.placeholder = "";
         input_long.placeholder = "";
         input_ele.placeholder = "";
+        input_pose.placeholder = "";
 
         // [hide update form, unhide find form]
         update_form.style = "display:none";
@@ -106,6 +110,7 @@
         var input_lat = document.getElementById('update-form-input-lat');
         var input_long = document.getElementById('update-form-input-long');
         var input_ele = document.getElementById('update-form-input-ele');
+        var input_pose = document.getElementById('update-form-input-pose');
 
         // [Clear error message and hide]
         error_message.innerHTML = "no_error";
@@ -115,7 +120,7 @@
         if (
           is_value_empty(input_name) && is_value_empty(input_url) &&
           is_value_empty(input_lat) && is_value_empty(input_long) &&
-          is_value_empty(input_ele)
+          is_value_empty(input_ele) && is_value_empty(input_pose)
         ) {
             error_message.innerHTML = "Change at least one field to update the record";
             error_section.style = "display:block; color:red";
@@ -139,6 +144,9 @@
         }
         if (!is_value_empty(input_ele)) {
             patches_json += "\n\t\"ele\": \"" + input_ele.value + "\"";
+        }
+        if (!is_value_empty(input_pose)) {
+            patches_json += "\n\t\"pose\": \"" + input_pose.value + "\"";
         }
         patches_json += "\n}";
 
@@ -218,6 +226,8 @@
     <input type="text" name="long" id="update-form-input-long"><br/><br/>
     Elevation:<br/>
     <input type="text" name="ele" id="update-form-input-ele"><br/><br/>
+    Pose:<br/>
+    <input type="text" name="pose" id="update-form-input-pose"><br/><br/>
     <button type="button" onclick="cancelUpdate()">Cancel</button>
     <button type="button" onclick="updateRecord()">Update Record</button>
 </form>
