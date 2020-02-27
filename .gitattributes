@@ -1,3 +1,13 @@
-# TODO: ensure this does not bork non-textual files
+# https://help.github.com/en/github/using-git/configuring-git-to-handle-line-endings
+
 # default for all files
-* text eol=lf
+* 	text=auto
+
+
+# manual overrides for text files (NOTE: incomplete)
+*.js 	text eol=lf
+*.ejs 	text eol=lf
+
+
+# manual override for binary format files (NOTE: incomplete)
+*.gif	binary
