@@ -24,6 +24,10 @@ module.exports = {
       defaultsTo: 'm',
       isIn: ['m', 'km', 'ft', 'mi']
     },
+    objectType: {
+      description: 'Object Type to filter (optional)',
+      type: 'string'
+    },
     raw: {
       description: 'Return results as raw json',
       type: 'boolean',
@@ -53,7 +57,11 @@ module.exports = {
     await sails.getDatastore('redis').leaseConnection(async (db) => {
       results = await (util.promisify(db.georadiusbymember).bind(db))(key, inputs.id, inputs.distance, inputs.units, 'WITHDIST', 'COUNT', 20, 'ASC');
     });
-    let geoMergedResults = await Record.mergeGeoResults(results, inputs.units, inputs.id);
+    let filter = undefined;
+    if (inputs.objectType) {
+      filter = { objectType: inputs.objectType };
+    }
+    let geoMergedResults = await Record.mergeGeoResults(results, inputs.units, inputs.id, filter);
     if (inputs.raw) {
       return geoMergedResults;
     } else {

@@ -14,6 +14,7 @@
         var input_long = document.getElementById('update-form-input-long');
         var input_ele = document.getElementById('update-form-input-ele');
         var input_pose = document.getElementById('update-form-input-pose');
+        let input_objectType = document.getElementById('update-form-input-objectType')
 
         // [Clear error message and hide]
         error_message.innerHTML = "no_error";
@@ -33,6 +34,7 @@
                 input_long.placeholder = records.long;
                 input_ele.placeholder = records.ele;
                 input_pose.placeholder = records.pose;
+                input_objectType.placeholder = records.objectType;
 
                 // [Hide find form, unhide update form and cancel button]
                 find_form.style = "display:none";
@@ -66,6 +68,7 @@
         var input_long = document.getElementById('update-form-input-long');
         var input_ele = document.getElementById('update-form-input-ele');
         var input_pose = document.getElementById('update-form-input-pose');
+        let input_objectType = document.getElementById('update-form-input-objectType');
 
 
         // ["Zero out" update form]
@@ -76,6 +79,7 @@
         input_long.placeholder = "";
         input_ele.placeholder = "";
         input_pose.placeholder = "";
+        input_objectType.placeholder = "";
 
         // [hide update form, unhide find form]
         update_form.style = "display:none";
@@ -111,6 +115,7 @@
         var input_long = document.getElementById('update-form-input-long');
         var input_ele = document.getElementById('update-form-input-ele');
         var input_pose = document.getElementById('update-form-input-pose');
+        let input_objectType = document.getElementById('update-form-input-objectType')
 
         // [Clear error message and hide]
         error_message.innerHTML = "no_error";
@@ -120,7 +125,8 @@
         if (
           is_value_empty(input_name) && is_value_empty(input_url) &&
           is_value_empty(input_lat) && is_value_empty(input_long) &&
-          is_value_empty(input_ele) && is_value_empty(input_pose)
+          is_value_empty(input_ele) && is_value_empty(input_pose) &&
+          is_value_empty(input_objectType)
         ) {
             error_message.innerHTML = "Change at least one field to update the record";
             error_section.style = "display:block; color:red";
@@ -147,6 +153,9 @@
         }
         if (!is_value_empty(input_pose)) {
             patches_json += "\n\t\"pose\": \"" + input_pose.value + "\"";
+        }
+        if (!is_value_empty(input_objectType)) {
+            patches_json += "\n\t\"objectType\": \"" + input_objectType.value + "\"";
         }
         patches_json += "\n}";
 
@@ -228,6 +237,8 @@
     <input type="text" name="ele" id="update-form-input-ele"><br/><br/>
     Pose:<br/>
     <input type="text" name="pose" id="update-form-input-pose"><br/><br/>
+    Object Type:<br>
+    <input type="text" name="pose" id="update-form-input-objectType"><br/><br/>
     <button type="button" onclick="cancelUpdate()">Cancel</button>
     <button type="button" onclick="updateRecord()">Update Record</button>
 </form>
