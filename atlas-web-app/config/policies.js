@@ -29,8 +29,10 @@ module.exports.policies = {
   * (`true` allows public access)                                            *
   *                                                                          *
   ***************************************************************************/
-
-  '*': auth_connect(basic),
   //'*': 'isLocal',
-
+  RecordController: {
+    update: auth_connect(basic),
+    create: auth_connect(basic),
+    delete: auth_connect(basic),
+  }
 };
