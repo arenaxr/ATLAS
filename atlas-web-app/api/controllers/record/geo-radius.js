@@ -44,7 +44,7 @@ module.exports = {
     let key = sails.config.custom.redis.geokey;
     let results = [];
     await sails.getDatastore('redis').leaseConnection(async (db) => {
-      results = await (util.promisify(db.georadius).bind(db))(key, inputs.lat, inputs.long, inputs.distance, inputs.units, 'WITHDIST', 'COUNT', 20, 'ASC');
+      results = await (util.promisify(db.georadius).bind(db))(key, inputs.long, inputs.lat, inputs.distance, inputs.units, 'WITHDIST', 'COUNT', 20, 'ASC');
     });
     let filter = undefined;
     if (inputs.objectType) {

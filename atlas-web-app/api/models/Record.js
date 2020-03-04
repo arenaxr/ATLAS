@@ -60,7 +60,7 @@ module.exports = {
   afterCreate: async (record, proceed) => {
     let key = sails.config.custom.redis.geokey;
     await sails.getDatastore('redis').leaseConnection(async (db) => {
-      await (util.promisify(db.geoadd).bind(db))(key, record.lat, record.long, record.id);
+      await (util.promisify(db.geoadd).bind(db))(key, record.long, record.lat, record.id);
     });
     proceed();
   },
@@ -68,7 +68,7 @@ module.exports = {
   afterUpdate: async (record, proceed) => {
     let key = sails.config.custom.redis.geokey;
     await sails.getDatastore('redis').leaseConnection(async (db) => {
-      await (util.promisify(db.geoadd).bind(db))(key, record.lat, record.long, record.id);
+      await (util.promisify(db.geoadd).bind(db))(key, record.long, record.lat, record.id);
     });
     proceed();
   },
