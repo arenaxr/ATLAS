@@ -1,4 +1,8 @@
+
+<!-- TODO : avoid duplicating this code in update-record-form.ejs -->
 <script>
+// TODO : * factor out reusable and generally useful code ([Get record ...])
+// todo   * keep the inextricably linked code to this page in this view
     function populateUpdateRecordForm(id) {
         // [Grab relevant elements for readability]
         var find_form = document.getElementById('div-find-form');
@@ -23,9 +27,11 @@
         // [Get record and display in update form]
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/record/' + id);
+
         xhr.onload = function () {
-            var records = JSON.parse(xhr.responseText);
             if (xhr.readyState == 4 && xhr.status == '200') {
+                var records = JSON.parse(xhr.responseText);
+
                 // [Load update form with current record values]
                 input_id.placeholder = records.id;
                 input_name.placeholder = records.name;
@@ -59,6 +65,9 @@
     function cancelUpdate() {
         // [Grab relevant elements for readability]
         var find_form = document.getElementById('div-find-form');
+
+        var error_section = document.getElementById('error-section');
+        var error_message = document.getElementById('error-message');
 
         var update_form = document.getElementById('div-update-form');
         var input_id = document.getElementById('update-form-input-id');
@@ -192,6 +201,8 @@
     }
 </script>
 
+
+
 <!-- TODO: replace w autogen version of pseudo filesystem header -->
 <a href="/home">ATLAS Home</a> <a>/</a> <a href="manage">ATLAS Management</a> <a>/</a> <a>Find & Update Record</a> <a>&gt;</a>
 
@@ -199,6 +210,7 @@
     Find Record and Update
 </h1>
 
+<!-- TODO : address that pressing Enter does nothing because no form action -->
 <div id="div-find-form" style="display:block">
 <form>
     ID:
@@ -216,7 +228,6 @@
 </form>
 </div>
 
-<!-- TODO : take "color" out of div since it has to be repeated in js above -->
 <div id="error-section" style="display:none;color:red">
   <p id="error-message">no_error</p>
 </div>

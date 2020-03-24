@@ -1,0 +1,178 @@
+
+<!-- TODO : avoid duplicating this code in update-record-form.ejs -->
+<!-- PAGE SCRIPTS vvv ###################################################### -->
+<script>
+
+    function populateConfirmForm(id) {
+        // [Grab relevant elements for readability]
+        var find_form = document.getElementById('div-find-form');
+
+        var error_section = document.getElementById('error-section');
+        var error_message = document.getElementById('error-message');
+
+        var confirm_form = document.getElementById('div-confirm-form');
+        var input_id = document.getElementById('confirm-form-input-id');
+        var input_name = document.getElementById('confirm-form-input-name');
+        var input_url = document.getElementById('confirm-form-input-url');
+        var input_lat = document.getElementById('confirm-form-input-lat');
+        var input_long = document.getElementById('confirm-form-input-long');
+        var input_ele = document.getElementById('confirm-form-input-ele');
+        var input_pose = document.getElementById('confirm-form-input-pose');
+        let input_objectType = document.getElementById('confirm-form-input-objectType')
+
+        // [Clear error message and hide]
+        error_message.innerHTML = "no_error";
+        error_section.style = "display:none; color:red";
+
+        // [Get record and display in confirm form]
+        // TODO : replace this block with func in api-request-get-record.js
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', '/record/' + id);
+
+        xhr.onload = function () {
+            if (xhr.readyState == 4 && xhr.status == '200') {
+                var records = JSON.parse(xhr.responseText);
+
+                // [Load update form with current record values]
+                input_id.placeholder = records.id;
+                input_name.placeholder = records.name;
+                input_url.placeholder = records.url;
+                input_lat.placeholder = records.lat;
+                input_long.placeholder = records.long;
+                input_ele.placeholder = records.ele;
+                input_pose.placeholder = records.pose;
+                input_objectType.placeholder = records.objectType;
+
+                // [Hide find form, unhide confirm form and cancel button]
+                find_form.style = "display:none";
+                confirm_form.style = "display:block";
+
+            } else {
+                // [Set error message and display]
+                error_message.innerHTML =
+                    "Record not found. Perhaps the ID is incorrect?";
+
+// TODO : consider adding some helpful bits here, such as:
+// todo   * find similar records
+// todo   * create record with given id (if conformant to UUIDv?)
+
+                error_section.style = "display:block; color:red";
+            }
+        };
+
+        xhr.send(null);
+    }
+
+    function cancelDelete() {
+        // [Grab relevant elements for readability]
+        var find_form = document.getElementById('div-find-form');
+
+        var error_section = document.getElementById('error-section');
+        var error_message = document.getElementById('error-message');
+
+        var confirm_form = document.getElementById('div-confirm-form');
+        var input_id = document.getElementById('confirm-form-input-id');
+        var input_name = document.getElementById('confirm-form-input-name');
+        var input_url = document.getElementById('confirm-form-input-url');
+        var input_lat = document.getElementById('confirm-form-input-lat');
+        var input_long = document.getElementById('confirm-form-input-long');
+        var input_ele = document.getElementById('confirm-form-input-ele');
+        var input_pose = document.getElementById('confirm-form-input-pose');
+        let input_objectType = document.getElementById('confirm-form-input-objectType');
+
+
+        // ["Zero out" confirm form]
+        input_id.placeholder = "";
+        input_name.placeholder = "";
+        input_url.placeholder = "";
+        input_lat.placeholder = "";
+        input_long.placeholder = "";
+        input_ele.placeholder = "";
+        input_pose.placeholder = "";
+        input_objectType.placeholder = "";
+
+        // [hide update form, unhide find form]
+        confirm_form.style = "display:none";
+        find_form.style = "display:block";
+
+        // [Clear error message and hide]
+        error_message.innerHTML = "no_error";
+        error_section.style = "display:none; color:red";
+
+    }
+
+  function deleteRecord(id) {
+    // [Grab relevant elements for readability]
+    var find_form = document.getElementById('div-find-form');
+
+    var error_section = document.getElementById('error-section');
+    var error_message = document.getElementById('error-message');
+
+    var confirm_form = document.getElementById('div-confirm-form');
+
+    // [Send RESTful DELETE]
+    // TODO : check this return value for errors!
+    requestDeleteRecord(id);
+
+    // [Hide confirm form; unhide find form]
+    confirm_form.style = "display:none";
+    find_form.style = "display:block";
+
+    // TODO : clear 'id-field'
+    alert("Record deleted!");
+  }
+
+</script>
+
+
+<!-- PAGE vvv ############################################################## -->
+
+
+
+<h1>
+    Delete ATLAS Record
+</h1>
+
+<h2>
+    Delete which ATLAS record?
+</h2>
+
+
+<div id="div-find-form" style="display:block">
+<form>
+    ID:
+    <br/>
+    <input type="text" name="id" id="id-field" placeholder="REQUIRED!" required>
+    <button type="Button" onclick="populateConfirmForm(document.getElementById('id-field').value);">Find Record</button>
+</form>
+</div>
+
+
+<div id="error-section" style="display:none;color:red">
+    <p id="error-message">no_error</p>
+</div>
+
+
+<div id="div-confirm-form" style="display:none">
+    <!-- TODO : ensure removing action & method attrs maintain functionality -->
+    <form action="record" method="post">
+        ID:<br/>
+        <input type="text" name="id" id="confirm-form-input-id" disabled><br/><br/>
+        Name:<br/>
+        <input type="text" name="name" id="confirm-form-input-name" disabled><br/><br/>
+        URL:<br/>
+        <input type="text" name="url" id="confirm-form-input-url" disabled><br/><br/>
+        Latitude:<br/>
+        <input type="text" name="lat" id="confirm-form-input-lat" disabled><br/><br/>
+        Longitude:<br/>
+        <input type="text" name="long" id="confirm-form-input-long" disabled><br/><br/>
+        Elevation:<br/>
+        <input type="text" name="ele" id="confirm-form-input-ele" disabled><br/><br/>
+        Pose:<br/>
+        <input type="text" name="pose" id="confirm-form-input-pose" disabled><br/><br/>
+        Object Type:<br>
+        <input type="text" name="pose" id="confirm-form-input-objectType" disabled><br/><br/>
+        <button type="button" onclick="cancelDelete()">Cancel</button>
+        <button type="button" onclick="deleteRecord(document.getElementById('id-field').value);">DELETE RECORD!</button>
+    </form>
+</div>
