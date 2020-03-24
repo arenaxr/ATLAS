@@ -10,12 +10,12 @@
     "@sailshq/socket.io-redis": "^5.2.0",
     "bulma": "^0.8.0",
     "bulma-start": "0.0.3",
-    "grunt": "1.0.4",
+    "grunt": "^1.1.0",
     "http-auth": "^4.1.2",
     "http-auth-connect": "^1.0.4",
     "node-sass": "^4.13.1",
     "requirejs": "^2.3.6",
-    "sails": "^1.2.3",
+    "sails": "^1.2.4",
     "sails-hook-grunt": "^4.0.0",
     "sails-hook-orm": "^2.1.1",
     "sails-hook-sockets": "^2.0.0",
@@ -27,13 +27,12 @@
     "eslint": "5.16.0"
   },
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
+    "start": "npm run css-watch",
     "test": "npm run lint && npm run custom-tests && echo 'Done.'",
     "lint": "./node_modules/eslint/bin/eslint.js . --max-warnings=0 --report-unused-disable-directives && echo '✔  Your .js files look good.'",
     "custom-tests": "echo \"(No other custom tests yet.)\" && echo",
     "css-build": "node-sass --omit-source-map-url sass/atlas_styles.scss assets/styles/atlas_styles.css",
-    "css-watch": "npm run css-build -- --watch",
-    "start": "npm run css-watch"
+    "css-watch": "npm run css-build -- --watch"
   },
   "main": "app.js",
   "repository": {
