@@ -1,7 +1,19 @@
 @charset "utf-8";
 
+
+// NOTE: ltsyj: the following are my own vars -->
+$mint: #aaffee;
+
+
+// NOTE: ltsyj: the followng vars are Bulma "initial" vars I want to override
+// This space intentionally blank
+
 //  Needed to know Bulma defined colors
 @import "../node_modules/bulma/sass/utilities/initial-variables.sass";
+
+// NOTE: ltsyj: The following vars are Bulma "derived" which is why they can
+//              be modified after importing "initial" vars -->
+$primary: $mint;
 
 $scheme-main: $black;
 $scheme-main-bis: $black-bis;
@@ -13,6 +25,9 @@ $background: $black-ter;
 $text: $grey-lightest;
 $text-light: $grey-lighter;
 $text-strong: $white-bis;
+
+$navbar-background-color: $mint;
+$navbar-item-color: $black;
 
 // TODO : ltsyj: Verify that this imports everything possibly needed for Bulma
 @import "../node_modules/bulma/bulma.sass";
