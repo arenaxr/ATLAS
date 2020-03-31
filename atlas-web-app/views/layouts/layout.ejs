@@ -38,14 +38,17 @@
 
     <!-- For free icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </head>
 
   <body>
-    <!-- BEGIN NAVBAR BEGIN -->
+    <!-- BEGIN NAVBAR START -->
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="https://conix.io/">
-          <img src="/favicon.ico" >
+          <i class="fas fa-atlas"></i>
         </a>
 
         <a class="navbar-item is-size-4" href="/home">
@@ -61,32 +64,46 @@
 
       <div id="navbarBasicExample" class="navbar-menu">
         <div class="navbar-start">
-          <a class="navbar-item">
-            Find
-          </a>
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Find
+            </a>
 
-          <a class="navbar-item">
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="/landing-geo-loc-near">
+                Near Scenes
+              </a>
+              <a class="navbar-item" href="/update-record-form">
+                By ID
+              </a>
+              <a class="navbar-item" href="/record">
+                ALL as JSON
+              </a>
+            </div>
+          </div>
+
+          <a class="navbar-item" href="/portal">
             Connect
           </a>
 
           <div class="navbar-item has-dropdown is-hoverable">
-            <a class="navbar-link">
+            <a class="navbar-link" href="/manage">
               Manage
             </a>
 
             <div class="navbar-dropdown">
-              <a class="navbar-item">
-                About
+              <a class="navbar-item" href="/create-record-form">
+                Create Record
               </a>
-              <a class="navbar-item">
-                Jobs
+              <a class="navbar-item" href="/update-record-form">
+                Modify Record
               </a>
-              <a class="navbar-item">
-                Contact
+              <a class="navbar-item" href="/delete-record-form">
+                Delete Record
               </a>
               <hr class="navbar-divider">
-              <a class="navbar-item">
-                Report an issue
+              <a class="navbar-item" href="/search-records-form">
+                Advanced Search
               </a>
             </div>
           </div>
@@ -95,11 +112,10 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
-                <strong>Sign up</strong>
-              </a>
-              <a class="button is-light">
-                Log in
+              <a class="github-button" href="https://github.com/conix-center/ATLAS/archive/master.zip"
+                 data-color-scheme="no-preference: dark; light: light; dark: dark;" data-size="large"
+                 aria-label="Download conix-center/ATLAS on GitHub">
+                   Download
               </a>
             </div>
           </div>
@@ -108,8 +124,24 @@
     </nav>
     <!-- END NAVBAR FIN -->
 
+
+
     <!-- body grabbed from view -->
     <%- body %>
+
+
+
+    <!-- START FOOTER BEGIN -->
+    <nav class="level">
+      <div class="level-item has-text-centered">
+        <figure class='image'>
+          <a href="https://conix.io/">
+            <img src="/images/conix-face-128.png">
+          </a>
+        </figure>
+      </div>
+    </nav>
+    <!-- END FOOTER FIN -->
 
 
 

@@ -3,7 +3,9 @@
 
 // NOTE: ltsyj: the following are my own vars -->
 $mint: #aaffee;
-
+$tomato: #b84930;
+$periwinkle: #aaaaff;
+$blush: #ffaaff;
 
 // NOTE: ltsyj: the followng vars are Bulma "initial" vars I want to override
 // This space intentionally blank
@@ -13,21 +15,28 @@ $mint: #aaffee;
 
 // NOTE: ltsyj: The following vars are Bulma "derived" which is why they can
 //              be modified after importing "initial" vars -->
-$primary: $mint;
+$primary:             $mint;
 
-$scheme-main: $black;
-$scheme-main-bis: $black-bis;
-$scheme-main-ter: $black-ter;
-$scheme-invert: $white;
-$scheme-invert-bis: $white-bis;
-$scheme-invert-ter: $white-ter;
-$background: $black-ter;
-$text: $grey-lightest;
-$text-light: $grey-lighter;
-$text-strong: $white-bis;
+$scheme-main:         $black;
+$scheme-main-bis:     $black-bis;
+$scheme-main-ter:     $black-ter;
+$scheme-invert:       $white;
+$scheme-invert-bis:   $white-bis;
+$scheme-invert-ter:   $white-ter;
+$background:          $scheme-main;
+$text:                $grey-lightest;
+$text-light:          $grey-lighter;
+$text-strong:         $white-bis;
+$link:                $periwinkle;
+$link-visited:        $blush;
+$link-hover:          $red;
 
-$navbar-background-color: $mint;
-$navbar-item-color: $black;
+$navbar-background-color:               $mint;
+$navbar-item-color:                     $black;
+$navbar-dropdown-background-color:      $grey-lighter;
+$navbar-item-hover-color:               $white-ter;
+$navbar-item-hover-background-color:    $tomato;
+$navbar-dropdown-arrow:                 $red;
 
 // TODO : ltsyj: Verify that this imports everything possibly needed for Bulma
 @import "../node_modules/bulma/bulma.sass";
