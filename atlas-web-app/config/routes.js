@@ -23,6 +23,7 @@ module.exports.routes = {
   '/landing-geo-loc-near': { view: 'pages/landing-geo-loc-near' },
   '/home': { view: 'pages/homepage' },
   '/portal': { view: 'pages/portal' },
+  '/go': {view: 'pages/portal' },
   '/about': { view: 'pages/about' },
   '/manage': { view: 'pages/manage' },
   '/create-record-form': { view: 'pages/create-record-form' },
