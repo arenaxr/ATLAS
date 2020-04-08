@@ -38,5 +38,7 @@ $navbar-item-hover-color:               $white-ter;
 $navbar-item-hover-background-color:    $tomato;
 $navbar-dropdown-arrow:                 $red;
 
-// TODO : ltsyj: Verify that this imports everything possibly needed for Bulma
+$footer-background-color: $mint;
+$footer-padding: 2rem 1rem 4rem;
+
 @import "../node_modules/bulma/bulma.sass";
