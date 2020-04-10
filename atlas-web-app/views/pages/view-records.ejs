@@ -1,0 +1,58 @@
+<!--
+Start off View Records with first page of records with default page size
+-->
+<script>
+  var current_page = -1;
+  var records_per_page = 5;
+  var last_page = -1;
+
+  window.onload = function () {
+    last_page = calculateLastPage(records_per_page);
+    console.log(last_page);
+    current_page = viewFirstPage(records_per_page);
+  };
+</script>
+<!-- *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- -->
+
+
+<div class='columns'>
+  
+  <div class="column">
+    
+    <div class='section'>
+      
+      <div class="content">
+        
+        <h1 class='subtitle is-paddingless is-marginless'>View All Records</h1>
+        
+        <a href='/record'>Access raw JSON dump</a>
+        </br>
+        </br>
+  
+  
+        <div class="section records-pagination">
+    
+          <nav class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <a class="button" onclick="current_page = viewPrevPage(current_page, records_per_page);"> Prev Page </a>
+                <a class="button" onclick="current_page = viewNextPage(current_page, records_per_page, last_page);"> Next Page </a>
+              </div>
+            </div>
+          </nav>
+    
+          <p id='records-output'></p>
+    
+          <!-- TODO : insert pagination nav here, below pages -->
+  
+        </div>
+
+
+
+      </div>
+      
+    </div>
+  
+  </div>
+
+</div>

@@ -26,6 +26,7 @@ module.exports.routes = {
   '/go': {view: 'pages/portal' },
   '/about': { view: 'pages/about' },
   '/manage': { view: 'pages/manage' },
+  '/view-records': { view: 'pages/view-records' },
   '/create-record-form': { view: 'pages/create-record-form' },
   '/search-records-form': { view: 'pages/search-records-form' },
   '/update-record-form': { view: 'pages/update-record-form' },

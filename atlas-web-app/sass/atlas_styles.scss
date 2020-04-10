@@ -2,10 +2,11 @@
 
 
 // NOTE: ltsyj: the following are my own vars -->
-$mint: #aaffee;
-$tomato: #b84930;
+$mint:       #aaffee;
+$darkmint:   #283b37;
+$tomato:     #b84930;
 $periwinkle: #aaaaff;
-$blush: #ffaaff;
+$blush:      #ffaaff;
 
 // NOTE: ltsyj: the followng vars are Bulma "initial" vars I want to override
 // This space intentionally blank
@@ -43,3 +44,7 @@ $footer-background-color: $mint;
 $footer-padding: 1rem 1rem 2.5rem;
 
 @import "../node_modules/bulma/bulma.sass";
+
+.records-pagination {
+  background-color: $darkmint;
+  }
