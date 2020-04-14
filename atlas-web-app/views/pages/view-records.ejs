@@ -1,16 +1,176 @@
 <!--
 Start off View Records with first page of records with default page size
 -->
+
+<script type="text/javascript" src="/dependencies/sails.io.js"></script>
 <script>
+  // TODO : figure how to use a listener for record updates
   var current_page = -1;
-  var records_per_page = 5;
-  var last_page = -1;
+  var records_per_page = 5; // TODO : rename recs_per_pg
 
   window.onload = function () {
-    last_page = calculateLastPage(records_per_page);
-    console.log(last_page);
-    current_page = viewFirstPage(records_per_page);
+
+    io.socket.get('/record', function gotResponse(body, response) {
+      //console.log('Current users: ', body);
+
+      // TODO : add logic to do server-side pagination for larger datasets, but
+      // todo   but still client-side for smaller datasets
+
+      // TODO : server-side will require depositing dataset size in document,
+      // todo   I think
+
+      //[Deposit dataset in invisible part of doc]
+      document.getElementById("records-all").innerHTML = JSON.stringify(body);
+
+      //[Get dataset from document]
+      var records = JSON.parse(document.getElementById("records-all").innerHTML);
+
+      //[Display first page]
+      var pg_1 = records.slice(0, records_per_page);
+      pg_1.forEach(fillRecords);
+
+    })
+
+    current_page = 1;
   };
+
+
+  function gotoCachedPage(current_page, new_page, recs_per_pg) {
+
+    //[Return w/o any change if requested new page is same as current]
+    if (new_page === current_page) {
+      return current_page;
+    }
+    //[Otherwise. display new page...]
+    clearRecords();
+
+    var records = JSON.parse(document.getElementById("records-all").innerHTML);
+    var new_recs_a = (new_page * recs_per_pg - recs_per_pg);
+    var new_recs_z = new_recs_a + recs_per_pg;
+    var pg_n = records.slice(new_recs_a, new_recs_z);
+
+    pg_n.forEach(fillRecords);
+
+    return new_page;
+  }
+
+  function lastCachedPageUI(current_page, recs_per_pg) {
+    //[Get last page]
+    var records = JSON.parse(document.getElementById("records-all").innerHTML);
+    var last_page = Math.ceil(records.length / recs_per_pg);
+    
+    //[Abort if already on last page]
+    if ( current_page === last_page ) {
+      return current_page;
+    }
+
+    //[Display last page]
+    gotoCachedPage(current_page, last_page, recs_per_pg);
+
+    document.getElementById("last-page").disabled = true;
+    document.getElementById("next-page").disabled = true;
+    document.getElementById("prev-page").disabled = false;
+    document.getElementById("first-page").disabled = false;
+
+    return last_page;
+  }
+
+  function nextCachedPageUI(current_page, recs_per_pg) {
+    //[Get last page for checks]
+    var records = JSON.parse(document.getElementById("records-all").innerHTML);
+    var last_page = Math.ceil(records.length / recs_per_pg);
+
+    //[If already on last page, do nothing and return]
+    // TODO : add some in-doc error text "Already on last page. [OK]"
+    if (current_page === last_page) {
+      return current_page;
+    }
+
+    //[Display next page]
+    var next_page = current_page + 1;
+    var new_page = gotoCachedPage(current_page, next_page, recs_per_pg);
+
+    if (new_page === next_page) {
+      //[Deactivate "Next" if this is last page]
+      if (new_page === last_page) {
+        document.getElementById("last-page").disabled = true;
+        document.getElementById("next-page").disabled = true;
+      }
+
+      //[Activate "Prev", since there was a "Prev"]
+      document.getElementById("prev-page").disabled = false;
+      document.getElementById("first-page").disabled = false;
+    }
+
+    return new_page;
+  }
+
+  function prevCachedPageUI(current_page, recs_per_pg) {
+    //[If already on first page, do nothing and return]
+    // TODO : add some in-doc error text "Already on first page. [OK]"
+    if (current_page === 1) {
+      return current_page;
+    }
+
+    //[Display prev page]
+    var prev_page = current_page - 1;
+    var new_page = gotoCachedPage(current_page, prev_page, recs_per_pg);
+
+    if (new_page === prev_page) {
+      //[Deactivate "Prev" if this is first page]
+      if (new_page === 1) {
+        document.getElementById("first-page").disabled = true;
+        document.getElementById("prev-page").disabled = true;
+      }
+
+      //[Activate "Next", since there was a "Next"]
+      document.getElementById("next-page").disabled = false;
+      document.getElementById("last-page").disabled = false;
+    }
+
+    return new_page;
+  }
+
+  function firstCachedPageUI(current_page, recs_per_pg) {
+    //[Abort if already on first page]
+    if ( current_page === 1 ) {
+      return current_page;
+    }
+    
+    //[Display first page]
+    gotoCachedPage(current_page, 1, recs_per_pg);
+
+    document.getElementById("first-page").disabled = true;
+    document.getElementById("prev-page").disabled = true;
+    document.getElementById("next-page").disabled = false;
+    document.getElementById("last-page").disabled = false;
+
+    return 1;
+  }
+  
+  var pg_input = document.getElementById("pg-input");
+  
+  // Go to page by changing page number
+  pg_input.addEventListener("keyup", function(event) {
+
+    if (event.keyCode === 13) {
+
+      event.preventDefault();
+      
+      // TODO : BOOKMARK 17
+      //[Get user text from input]
+      
+      //[Sanitize user input]
+      
+      //[Parse to number]
+
+      //[Enforce page boundaries
+      //(NOTE: need to get records cache before this)]
+      
+      //[Jump to page w `gotoCachedPage`]
+    }
+
+  });
 </script>
 <!-- *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- -->
 
@@ -35,8 +195,11 @@ Start off View Records with first page of records with default page size
           <nav class="level">
             <div class="level-left">
               <div class="level-item">
-                <a class="button" onclick="current_page = viewPrevPage(current_page, records_per_page);"> Prev Page </a>
-                <a class="button" onclick="current_page = viewNextPage(current_page, records_per_page, last_page);"> Next Page </a>
+                <button id="first-page" class="button" onclick="current_page = firstCachedPageUI(current_page, records_per_page);" disabled> |<< </button>
+                <button id="prev-page" class="button" onclick="current_page = prevCachedPageUI(current_page, records_per_page);" disabled> < Prev Page </button>
+                <input id="pg-input" class="input" type="text" size="3" placeholder="1">
+                <button id="next-page" class="button" onclick="current_page = nextCachedPageUI(current_page, records_per_page);"> Next Page > </button>
+                <button id="last-page" class="button" onclick="current_page = lastCachedPageUI(current_page, records_per_page);"> >>| </button>
               </div>
             </div>
           </nav>
@@ -44,10 +207,8 @@ Start off View Records with first page of records with default page size
           <p id='records-output'></p>
     
           <!-- TODO : insert pagination nav here, below pages -->
-  
+          
         </div>
-
-
 
       </div>
       
@@ -55,4 +216,8 @@ Start off View Records with first page of records with default page size
   
   </div>
 
+</div>
+
+<div class="is-hidden">
+  <p id='records-all'></p>
 </div>

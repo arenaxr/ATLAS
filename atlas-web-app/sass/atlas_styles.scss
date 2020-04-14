@@ -43,6 +43,9 @@ $navbar-dropdown-arrow:                 $red;
 $footer-background-color: $mint;
 $footer-padding: 1rem 1rem 2.5rem;
 
+$button-focus-color: $white-ter;
+$button-disabled-opacity: 0.2;
+
 @import "../node_modules/bulma/bulma.sass";
 
 .records-pagination {

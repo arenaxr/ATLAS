@@ -1186,7 +1186,7 @@ a.box:active {
     color: #f14668; }
   .button:focus, .button.is-focused {
     border-color: #3273dc;
-    color: #363636; }
+    color: whitesmoke; }
     .button:focus:not(:active), .button.is-focused:not(:active) {
       box-shadow: 0 0 0 0.125em rgba(170, 170, 255, 0.25); }
   .button:active, .button.is-active {
@@ -1968,7 +1968,7 @@ a.box:active {
     background-color: #0a0a0a;
     border-color: #dbdbdb;
     box-shadow: none;
-    opacity: 0.5; }
+    opacity: 0.2; }
   .button.is-fullwidth {
     display: flex;
     width: 100%; }

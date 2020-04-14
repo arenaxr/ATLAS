@@ -1,5 +1,41 @@
 
 
+
+function getAllRecordsRN() {
+  var pgs_c = -17;
+
+  // [Get all records]
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', '/record' );
+
+  xhr.onload = function () {
+    if (xhr.readyState == 4 && xhr.status == '200') {
+      var records = JSON.parse(xhr.responseText);
+
+      var rem = records.length % page_size;
+      full_pages = ( records.length - rem ) / page_size;
+
+      if (rem !== 0) {
+        full_pages = full_pages + 1;
+      }
+
+      // TODO : BOOKMARK: figure out how to get seomthing back from callback,
+      //                  outside of document manipulation ... ?
+      console.log("full pages: " + full_pages);
+
+    } else {
+      // [Set error message and display]
+      // TODO : upgrade to something on page!
+      console.log("getLastPage GET request had other than 200 status");
+    }
+  };
+
+  xhr.send(null);
+
+  return full_pages;
+}
+
+
 /**
  *
  * @param nth_page
@@ -51,6 +87,12 @@ function fillRecords(value) {
   document.getElementById('records-output').innerHTML = document.getElementById('records-output').innerHTML + 'objectType: ' + value.objectType + '<br><br>';
 }
 
+function clearRecords() {
+  // TODO : pass in the desired innerHTML as an object somehow, to make generic
+  document.getElementById('records-output').innerHTML = "";
+
+}
+
 function viewFirstPage(records_per_page) {
   viewRecordsBulk(1, records_per_page);
   return 1;
@@ -72,40 +114,4 @@ function viewNextPage(current_page, records_per_page, last_page) {
   }
 
   return current_page;
-}
-
-
-
-function calculateLastPage(page_size) {
-  var full_pages = -17;
-
-  // [Get all records]
-  var xhr = new XMLHttpRequest();
-  xhr.open('GET', '/record' );
-
-  xhr.onload = function () {
-    if (xhr.readyState == 4 && xhr.status == '200') {
-      var records = JSON.parse(xhr.responseText);
-
-      var rem = records.length % page_size;
-      full_pages = ( records.length - rem ) / page_size;
-
-      if (rem !== 0) {
-        full_pages = full_pages + 1;
-      }
-
-      // TODO : BOOKMARK: figure out how to get seomthing back from callback,
-      //                  outside of document manipulation ... ?
-      console.log("full pages: " + full_pages);
-
-    } else {
-      // [Set error message and display]
-      // TODO : upgrade to something on page!
-      console.log("getLastPage GET request had other than 200 status");
-    }
-  };
-
-  xhr.send(null);
-
-  return full_pages;
 }
