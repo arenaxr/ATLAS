@@ -3,28 +3,33 @@ Periodically revisit validation/sanitation needs for this form. See:
 https://github.com/conix-center/ATLAS/issues/1
 -->
 
-
-
-<h1>
-Advanced Search ATLAS Records
-</h1>
-
-<h2>
-Please enter valid Waterline query language:
-</h2>
-
-<form action="record">
-<a href="https://sailsjs.com/documentation/reference/blueprint-api/find-where">
-find API & where clause reference
-</a>
-<br/>
-where:
-<br/>
-<!-- TODO: ltj: add more helpful example, like: '{"url":{"contains":"espn"}}'
-                this probably includes making input size to window...  -->
-<input type="text" name="where" placeholder="JSON" required>
-<br/>
-<br/>
-<input type="submit" value="submit">
-<!-- TODO: ltj: add sorting/pagination fields.. -->
-</form>
+<div class="section">
+  
+  <h1 class="title">
+    Advanced Search ATLAS Records
+  </h1>
+  
+  <p>
+    Please enter valid Waterline query language:
+  </p>
+  
+  <form action="record">
+    <a
+      href="https://sailsjs.com/documentation/reference/blueprint-api/find-where"
+    >
+      find API & where clause reference
+    </a>
+    <br/>
+    ATLAS records where:
+    <br/>
+    <!-- TODO: ltj: add more helpful example, like: '{"url":{"contains":"espn"}}'
+                    this probably includes making input size to window...  -->
+    <div class="control"><!-- TODO : remove placeholder onfocus, add onblur -->
+      <input class="input" type="text" name="where" placeholder="JSON" required>
+    </div>
+    <br/>
+    <br/>
+    <input class="button is-info" type="submit" value="submit">
+    <!-- TODO: ltj: add sorting/pagination fields.. -->
+  </form>
+</div>

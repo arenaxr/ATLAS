@@ -3,45 +3,87 @@ Start off View Records with first page of records with default page size
 -->
 
 <script type="text/javascript" src="/dependencies/sails.io.js"></script>
-<script>
-  // TODO : figure how to use a listener for record updates
-  var current_page = -1;
-  var records_per_page = 5; // TODO : rename recs_per_pg
 
+<script>
+  // TODO : figure how to use a listener for Record updates
+
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  // NOTE : bit of a bf rn, but I'm assuming this is just init stuff...
+  var recs_per_pg = 5;
+  var rn_pg = -1; // this *_pg var is more for post-init stuff...
+  var req_pg = getParameterByName('start-pg');
+  var goto_pg = -1; // this *_pg var is the page we'll go to for init.
+  
   window.onload = function () {
 
     io.socket.get('/record', function gotResponse(body, response) {
-      //console.log('Current users: ', body);
-
-      // TODO : add logic to do server-side pagination for larger datasets, but
-      // todo   but still client-side for smaller datasets
-
-      // TODO : server-side will require depositing dataset size in document,
-      // todo   I think
-
       //[Deposit dataset in invisible part of doc]
       document.getElementById("records-all").innerHTML = JSON.stringify(body);
 
       //[Get dataset from document]
       var records = JSON.parse(document.getElementById("records-all").innerHTML);
+      var last_page = Math.ceil(records.length / recs_per_pg);
 
-      //[Display first page]
-      var pg_1 = records.slice(0, records_per_page);
-      pg_1.forEach(fillRecords);
+      console.log("req_pg is str");
+      req_pg = parseInt(req_pg);
+      if ( Number.isInteger(req_pg) ) {
+        console.log("req_pg is int");
+        if ( req_pg >= 1 && req_pg <= last_page ) {
+          console.log("req_pg is in page range");
+          goto_pg = req_pg;
+        }
+      } else {
+        goto_pg = 1;
+      }
 
+      //[Display goto page]
+      rn_pg = gotoCachedPage(rn_pg, goto_pg, recs_per_pg);
+      document.getElementById("pg-input").placeholder = rn_pg;
+
+      refreshPageNav(last_page, rn_pg);
     })
 
-    current_page = 1;
   };
 
+  // TODO : investigate using this for button logic as well?
+  //        * good if doesn't force more last_page calculation!
+  function refreshPageNav(last_page, current_page) {
+    if ( current_page === 1 ) {
+      document.getElementById("first-page").disabled = true;
+      document.getElementById("prev-page").disabled = true;
+      document.getElementById("next-page").disabled = false;
+      document.getElementById("last-page").disabled = false;
+    } else if ( current_page === last_page ) {
+      document.getElementById("first-page").disabled = false;
+      document.getElementById("prev-page").disabled = false;
+      document.getElementById("next-page").disabled = true;
+      document.getElementById("last-page").disabled = true;
+    } else {
+      document.getElementById("first-page").disabled = false;
+      document.getElementById("prev-page").disabled = false;
+      document.getElementById("next-page").disabled = false;
+      document.getElementById("last-page").disabled = false;
+    }
+  }
 
+  // TODO : rename to displayCachedPage
+  // TODO : rename to records_per_page (more verbose for subfuncs)
   function gotoCachedPage(current_page, new_page, recs_per_pg) {
 
     //[Return w/o any change if requested new page is same as current]
     if (new_page === current_page) {
       return current_page;
     }
-    //[Otherwise. display new page...]
+    //[Otherwise, display new page...]
     clearRecords();
 
     var records = JSON.parse(document.getElementById("records-all").innerHTML);
@@ -65,10 +107,11 @@ Start off View Records with first page of records with default page size
     }
 
     //[Display last page]
-    gotoCachedPage(current_page, last_page, recs_per_pg);
+    var new_page = gotoCachedPage(current_page, last_page, recs_per_pg);
 
     document.getElementById("last-page").disabled = true;
     document.getElementById("next-page").disabled = true;
+    document.getElementById("pg-input").placeholder = new_page;
     document.getElementById("prev-page").disabled = false;
     document.getElementById("first-page").disabled = false;
 
@@ -90,6 +133,7 @@ Start off View Records with first page of records with default page size
     var next_page = current_page + 1;
     var new_page = gotoCachedPage(current_page, next_page, recs_per_pg);
 
+    document.getElementById("pg-input").placeholder = new_page;
     if (new_page === next_page) {
       //[Deactivate "Next" if this is last page]
       if (new_page === last_page) {
@@ -116,6 +160,7 @@ Start off View Records with first page of records with default page size
     var prev_page = current_page - 1;
     var new_page = gotoCachedPage(current_page, prev_page, recs_per_pg);
 
+    document.getElementById("pg-input").placeholder = new_page;
     if (new_page === prev_page) {
       //[Deactivate "Prev" if this is first page]
       if (new_page === 1) {
@@ -138,39 +183,17 @@ Start off View Records with first page of records with default page size
     }
     
     //[Display first page]
-    gotoCachedPage(current_page, 1, recs_per_pg);
+    var new_page = gotoCachedPage(current_page, 1, recs_per_pg);
 
     document.getElementById("first-page").disabled = true;
     document.getElementById("prev-page").disabled = true;
+    document.getElementById("pg-input").placeholder = new_page;
     document.getElementById("next-page").disabled = false;
     document.getElementById("last-page").disabled = false;
 
     return 1;
   }
   
-  var pg_input = document.getElementById("pg-input");
-  
-  // Go to page by changing page number
-  pg_input.addEventListener("keyup", function(event) {
-
-    if (event.keyCode === 13) {
-
-      event.preventDefault();
-      
-      // TODO : BOOKMARK 17
-      //[Get user text from input]
-      
-      //[Sanitize user input]
-      
-      //[Parse to number]
-
-      //[Enforce page boundaries
-      //(NOTE: need to get records cache before this)]
-      
-      //[Jump to page w `gotoCachedPage`]
-    }
-
-  });
 </script>
 <!-- *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- -->
 
@@ -195,11 +218,13 @@ Start off View Records with first page of records with default page size
           <nav class="level">
             <div class="level-left">
               <div class="level-item">
-                <button id="first-page" class="button" onclick="current_page = firstCachedPageUI(current_page, records_per_page);" disabled> |<< </button>
-                <button id="prev-page" class="button" onclick="current_page = prevCachedPageUI(current_page, records_per_page);" disabled> < Prev Page </button>
-                <input id="pg-input" class="input" type="text" size="3" placeholder="1">
-                <button id="next-page" class="button" onclick="current_page = nextCachedPageUI(current_page, records_per_page);"> Next Page > </button>
-                <button id="last-page" class="button" onclick="current_page = lastCachedPageUI(current_page, records_per_page);"> >>| </button>
+                <button id="first-page" class="button" onclick="rn_pg = firstCachedPageUI(rn_pg, recs_per_pg);" disabled> |<< </button>
+                <button id="prev-page" class="button" onclick="rn_pg = prevCachedPageUI(rn_pg, recs_per_pg);" disabled> < Prev Page </button>
+                <form>
+                <input id="pg-input" name="start-pg" class="input" type="text" size="3" onfocus="this.placeholder='';" onblur="this.placeholder=rn_pg;" placeholder="-1">
+                </form>
+                <button id="next-page" class="button" onclick="rn_pg = nextCachedPageUI(rn_pg, recs_per_pg);"> Next Page > </button>
+                <button id="last-page" class="button" onclick="rn_pg = lastCachedPageUI(rn_pg, recs_per_pg);"> >>| </button>
               </div>
             </div>
           </nav>

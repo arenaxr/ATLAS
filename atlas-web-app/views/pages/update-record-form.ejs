@@ -201,53 +201,65 @@
     }
 </script>
 
-
-
-<h1>
+<div class="section">
+  
+  <h1 class="title">
     Find Record & Update
-</h1>
-
-<!-- TODO : address that pressing Enter does nothing because no form action -->
-<div id="div-find-form" style="display:block">
-<form>
-    ID:
-    <br/>
-    <input type="text" name="id" id="find-form-input-id" required>
-
-    <button
-      type="button"
-      onclick="populateUpdateRecordForm(
+  </h1>
+  
+  <!-- TODO : address that pressing Enter does nothing because no form action -->
+  <div id="div-find-form" style="display:block">
+    <form>
+      <div class="field">
+        <label class="label">
+          ID:
+        </label>
+        <div class="control">
+          <input class="input" type="text" name="id" id="find-form-input-id" required>
+        </div>
+      </div>
+      
+      <button
+        class="button is-info"
+        type="button"
+        onclick="populateUpdateRecordForm(
                document.getElementById('find-form-input-id').value);"
-    >
-    Find Record
-    </button>
+      >
+        Find Record
+      </button>
+    
+    </form>
+  </div>
+  
+  <div id="error-section" style="display:none;color:red">
+    <p id="error-message">no_error</p>
+  </div>
+  
+  <div id="div-update-form" style="display:none">
+    <form action="record" method="post">
+      ID:<br/>
+      <input
+        type="text" name="id" id="update-form-input-id" disabled
+      ><br/><br/>
+      Name:<br/>
+      <input type="text" name="name" id="update-form-input-name"><br/><br/>
+      URL:<br/>
+      <input type="text" name="url" id="update-form-input-url"><br/><br/>
+      Latitude:<br/>
+      <input type="text" name="lat" id="update-form-input-lat"><br/><br/>
+      Longitude:<br/>
+      <input type="text" name="long" id="update-form-input-long"><br/><br/>
+      Elevation:<br/>
+      <input type="text" name="ele" id="update-form-input-ele"><br/><br/>
+      Pose:<br/>
+      <input type="text" name="pose" id="update-form-input-pose"><br/><br/>
+      Object Type:<br>
+      <input
+        type="text" name="pose" id="update-form-input-objectType"
+      ><br/><br/>
+      <button type="button" onclick="cancelUpdate()">Cancel</button>
+      <button type="button" onclick="updateRecord()">Update Record</button>
+    </form>
+  </div>
 
-</form>
-</div>
-
-<div id="error-section" style="display:none;color:red">
-  <p id="error-message">no_error</p>
-</div>
-
-<div id="div-update-form" style="display:none">
-<form action="record" method="post">
-    ID:<br/>
-    <input type="text" name="id" id="update-form-input-id" disabled><br/><br/>
-    Name:<br/>
-    <input type="text" name="name" id="update-form-input-name"><br/><br/>
-    URL:<br/>
-    <input type="text" name="url" id="update-form-input-url"><br/><br/>
-    Latitude:<br/>
-    <input type="text" name="lat" id="update-form-input-lat"><br/><br/>
-    Longitude:<br/>
-    <input type="text" name="long" id="update-form-input-long"><br/><br/>
-    Elevation:<br/>
-    <input type="text" name="ele" id="update-form-input-ele"><br/><br/>
-    Pose:<br/>
-    <input type="text" name="pose" id="update-form-input-pose"><br/><br/>
-    Object Type:<br>
-    <input type="text" name="pose" id="update-form-input-objectType"><br/><br/>
-    <button type="button" onclick="cancelUpdate()">Cancel</button>
-    <button type="button" onclick="updateRecord()">Update Record</button>
-</form>
 </div>
