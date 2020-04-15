@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <title>ATLAS</title>
 
@@ -38,19 +38,177 @@
 
     <!-- For free icons -->
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </head>
 
   <body>
-    <!-- Maria/Home link header for every page -->
+    <!-- BEGIN NAVBAR START -->
+    <nav class="navbar" role="navigation" aria-label="main navigation">
+    
+      <div class="navbar-brand">
+      
+        <a class="navbar-item is-size-4 has-text-weight-bold" href="/home">
+          <i class="fas fa-atlas fa-2x"></i> &nbsp; ATLAS
+        </a>
+  
+        <a
+          role="button" class="navbar-burger burger"
+          onclick="document.querySelector('.navbar-menu').classList.toggle('is-active');"
+          aria-label="menu" aria-expanded="false"
+          data-target="navbarBasicExample"
+        >
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
 
-    <a href="/home"> <img src="/images/the-cybernaut.gif"> </a>
-    </br>
-    <a href="/home"> ATLAS Home </a>
-    </br>
-    </br>
+      </div>
+
+
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Find
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="/landing-geo-loc-near">
+                Near Scenes
+              </a>
+              <a class="navbar-item" href="/update-record-form">
+                By ID
+              </a>
+              <a class="navbar-item" href="/view-records">
+                View Records
+              </a>
+              <hr class="navbar-divider">
+              <a class="navbar-item" href="/search-records-form">
+                Advanced Search
+              </a>
+            </div>
+          </div>
+
+          <div class="navbar-item has-dropdown is-hoverable">
+            <a class="navbar-link">
+              Manage
+            </a>
+
+            <div class="navbar-dropdown">
+              <a class="navbar-item" href="/create-record-form">
+                Create Record
+              </a>
+              <a class="navbar-item" href="/update-record-form">
+                Modify Record
+              </a>
+              <a class="navbar-item" href="/delete-record-form">
+                Delete Record
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="github-button" href="https://github.com/conix-center/ATLAS/archive/master.zip"
+                 data-color-scheme="no-preference: dark; light: light; dark: dark;" data-size="large"
+                 aria-label="Download conix-center/ATLAS on GitHub">
+                   Download
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- END NAVBAR FIN -->
+
 
     <!-- body grabbed from view -->
     <%- body %>
+
+
+    <!-- START FOOTER BEGIN -->
+    <footer class="footer">
+    
+  
+      <nav class="level">
+    
+        <div class="level-item">
+          <figure class='image'>
+            <a href="https://conix.io/">
+              <img src="/images/conix-face-nat-small.png">
+            </a>
+          </figure>
+        </div>
+    
+        <div class="level-item">
+          <div class="buttons">
+            <a
+              class="github-button" href="https://github.com/conix-center"
+              data-color-scheme="no-preference: dark; light: light; dark: dark;"
+              data-size="large" aria-label="Follow @conix-center on GitHub"
+            >Follow @conix-center</a>
+          </div>
+        </div>
+    
+        <div class="level-item">
+          <div class="buttons">
+            <a
+              class="github-button" href="https://github.com/conix-center/ATLAS"
+              data-color-scheme="no-preference: dark; light: light; dark: dark;"
+              data-icon="octicon-star" data-size="large"
+              aria-label="Star conix-center/ATLAS on GitHub"
+            >Star</a>
+          </div>
+        </div>
+    
+        <div class="level-item">
+          <div class="buttons">
+            <a
+              class="github-button"
+              href="https://github.com/conix-center/ATLAS/issues"
+              data-color-scheme="no-preference: dark; light: light; dark: dark;"
+              data-icon="octicon-issue-opened" data-size="large"
+              aria-label="Issue conix-center/ATLAS on GitHub"
+            >Issue</a>
+          </div>
+        </div>
+  
+        <div class="level-item">
+          <div class="buttons">
+            <a
+              class="github-button"
+              href="https://github.com/conix-center/ATLAS/subscription"
+              data-color-scheme="no-preference: dark; light: light; dark: dark;"
+              data-icon="octicon-eye" data-size="large"
+              aria-label="Watch conix-center/ATLAS on GitHub"
+            >Watch</a>
+          </div>
+        </div>
+  
+        <div class="level-item">
+          <a class="has-text-black" href="/home">
+            <i class="fas fa-atlas fa-6x"></i>
+          </a>
+        </div>
+  
+      </nav>
+      
+      
+      <div class="container has-text-black has-text-centered">
+        <p> Please direct questions to
+          <a href="mailto:info@conix.io">info@conix.io</a>
+          </br>
+          </br>
+        </p>
+      </div>
+
+
+    </footer>
+    <!-- END FOOTER FIN -->
 
 
 
@@ -122,7 +280,7 @@
     <script src="/dependencies/sails.io.js"></script>
     <script src="/js/all.js"></script>
     <script src="/js/api-request-delete-record.js"></script>
-    <script src="/js/api-request-get-record.js"></script>
+    <script src="/js/api-request-view-records.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

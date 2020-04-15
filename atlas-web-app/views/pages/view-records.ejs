@@ -1,0 +1,248 @@
+<!--
+Start off View Records with first page of records with default page size
+-->
+
+<script type="text/javascript" src="/dependencies/sails.io.js"></script>
+
+<script>
+  // TODO : figure how to use a listener for Record updates
+
+  function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+      results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+  }
+
+  // NOTE : bit of a bf rn, but I'm assuming this is just init stuff...
+  var recs_per_pg = 5;
+  var rn_pg = -1; // this *_pg var is more for post-init stuff...
+  var req_pg = getParameterByName('start-pg');
+  var goto_pg = -1; // this *_pg var is the page we'll go to for init.
+  
+  window.onload = function () {
+
+    io.socket.get('/record', function gotResponse(body, response) {
+      //[Deposit dataset in invisible part of doc]
+      document.getElementById("records-all").innerHTML = JSON.stringify(body);
+
+      //[Get dataset from document]
+      var records = JSON.parse(document.getElementById("records-all").innerHTML);
+      var last_page = Math.ceil(records.length / recs_per_pg);
+
+      console.log("req_pg is str");
+      req_pg = parseInt(req_pg);
+      if ( Number.isInteger(req_pg) ) {
+        console.log("req_pg is int");
+        if ( req_pg >= 1 && req_pg <= last_page ) {
+          console.log("req_pg is in page range");
+          goto_pg = req_pg;
+        }
+      } else {
+        goto_pg = 1;
+      }
+
+      //[Display goto page]
+      rn_pg = gotoCachedPage(rn_pg, goto_pg, recs_per_pg);
+      document.getElementById("pg-input").placeholder = rn_pg;
+
+      refreshPageNav(last_page, rn_pg);
+    })
+
+  };
+
+  // TODO : investigate using this for button logic as well?
+  //        * good if doesn't force more last_page calculation!
+  function refreshPageNav(last_page, current_page) {
+    if ( current_page === 1 ) {
+      document.getElementById("first-page").disabled = true;
+      document.getElementById("prev-page").disabled = true;
+      document.getElementById("next-page").disabled = false;
+      document.getElementById("last-page").disabled = false;
+    } else if ( current_page === last_page ) {
+      document.getElementById("first-page").disabled = false;
+      document.getElementById("prev-page").disabled = false;
+      document.getElementById("next-page").disabled = true;
+      document.getElementById("last-page").disabled = true;
+    } else {
+      document.getElementById("first-page").disabled = false;
+      document.getElementById("prev-page").disabled = false;
+      document.getElementById("next-page").disabled = false;
+      document.getElementById("last-page").disabled = false;
+    }
+  }
+
+  // TODO : rename to displayCachedPage
+  // TODO : rename to records_per_page (more verbose for subfuncs)
+  function gotoCachedPage(current_page, new_page, recs_per_pg) {
+
+    //[Return w/o any change if requested new page is same as current]
+    if (new_page === current_page) {
+      return current_page;
+    }
+    //[Otherwise, display new page...]
+    clearRecords();
+
+    var records = JSON.parse(document.getElementById("records-all").innerHTML);
+    var new_recs_a = (new_page * recs_per_pg - recs_per_pg);
+    var new_recs_z = new_recs_a + recs_per_pg;
+    var pg_n = records.slice(new_recs_a, new_recs_z);
+
+    pg_n.forEach(fillRecords);
+
+    return new_page;
+  }
+
+  function lastCachedPageUI(current_page, recs_per_pg) {
+    //[Get last page]
+    var records = JSON.parse(document.getElementById("records-all").innerHTML);
+    var last_page = Math.ceil(records.length / recs_per_pg);
+    
+    //[Abort if already on last page]
+    if ( current_page === last_page ) {
+      return current_page;
+    }
+
+    //[Display last page]
+    var new_page = gotoCachedPage(current_page, last_page, recs_per_pg);
+
+    document.getElementById("last-page").disabled = true;
+    document.getElementById("next-page").disabled = true;
+    document.getElementById("pg-input").placeholder = new_page;
+    document.getElementById("prev-page").disabled = false;
+    document.getElementById("first-page").disabled = false;
+
+    return last_page;
+  }
+
+  function nextCachedPageUI(current_page, recs_per_pg) {
+    //[Get last page for checks]
+    var records = JSON.parse(document.getElementById("records-all").innerHTML);
+    var last_page = Math.ceil(records.length / recs_per_pg);
+
+    //[If already on last page, do nothing and return]
+    // TODO : add some in-doc error text "Already on last page. [OK]"
+    if (current_page === last_page) {
+      return current_page;
+    }
+
+    //[Display next page]
+    var next_page = current_page + 1;
+    var new_page = gotoCachedPage(current_page, next_page, recs_per_pg);
+
+    document.getElementById("pg-input").placeholder = new_page;
+    if (new_page === next_page) {
+      //[Deactivate "Next" if this is last page]
+      if (new_page === last_page) {
+        document.getElementById("last-page").disabled = true;
+        document.getElementById("next-page").disabled = true;
+      }
+
+      //[Activate "Prev", since there was a "Prev"]
+      document.getElementById("prev-page").disabled = false;
+      document.getElementById("first-page").disabled = false;
+    }
+
+    return new_page;
+  }
+
+  function prevCachedPageUI(current_page, recs_per_pg) {
+    //[If already on first page, do nothing and return]
+    // TODO : add some in-doc error text "Already on first page. [OK]"
+    if (current_page === 1) {
+      return current_page;
+    }
+
+    //[Display prev page]
+    var prev_page = current_page - 1;
+    var new_page = gotoCachedPage(current_page, prev_page, recs_per_pg);
+
+    document.getElementById("pg-input").placeholder = new_page;
+    if (new_page === prev_page) {
+      //[Deactivate "Prev" if this is first page]
+      if (new_page === 1) {
+        document.getElementById("first-page").disabled = true;
+        document.getElementById("prev-page").disabled = true;
+      }
+
+      //[Activate "Next", since there was a "Next"]
+      document.getElementById("next-page").disabled = false;
+      document.getElementById("last-page").disabled = false;
+    }
+
+    return new_page;
+  }
+
+  function firstCachedPageUI(current_page, recs_per_pg) {
+    //[Abort if already on first page]
+    if ( current_page === 1 ) {
+      return current_page;
+    }
+    
+    //[Display first page]
+    var new_page = gotoCachedPage(current_page, 1, recs_per_pg);
+
+    document.getElementById("first-page").disabled = true;
+    document.getElementById("prev-page").disabled = true;
+    document.getElementById("pg-input").placeholder = new_page;
+    document.getElementById("next-page").disabled = false;
+    document.getElementById("last-page").disabled = false;
+
+    return 1;
+  }
+  
+</script>
+<!-- *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- -->
+
+
+<div class='columns'>
+  
+  <div class="column">
+    
+    <div class='section'>
+      
+      <div class="content">
+        
+        <h1 class='subtitle is-paddingless is-marginless'>View All Records</h1>
+        
+        <a href='/record'>Access raw JSON dump</a>
+        </br>
+        </br>
+  
+  
+        <div class="section records-pagination">
+    
+          <nav class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <button id="first-page" class="button" onclick="rn_pg = firstCachedPageUI(rn_pg, recs_per_pg);" disabled> |<< </button>
+                <button id="prev-page" class="button" onclick="rn_pg = prevCachedPageUI(rn_pg, recs_per_pg);" disabled> < Prev Page </button>
+                <form>
+                <input id="pg-input" name="start-pg" class="input" type="text" size="3" onfocus="this.placeholder='';" onblur="this.placeholder=rn_pg;" placeholder="-1">
+                </form>
+                <button id="next-page" class="button" onclick="rn_pg = nextCachedPageUI(rn_pg, recs_per_pg);"> Next Page > </button>
+                <button id="last-page" class="button" onclick="rn_pg = lastCachedPageUI(rn_pg, recs_per_pg);"> >>| </button>
+              </div>
+            </div>
+          </nav>
+    
+          <p id='records-output'></p>
+    
+          <!-- TODO : insert pagination nav here, below pages -->
+          
+        </div>
+
+      </div>
+      
+    </div>
+  
+  </div>
+
+</div>
+
+<div class="is-hidden">
+  <p id='records-all'></p>
+</div>

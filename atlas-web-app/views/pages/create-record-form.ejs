@@ -3,36 +3,89 @@ Periodically revisit validation needs for this form. See:
 https://github.com/conix-center/ATLAS/issues/1
 -->
 
+<div class="section">
 
-
-<h1>
+<h1 class="title">
     Create New ATLAS Record
 </h1>
 
-<h2>
-    Please fill out this form and submit:
-</h2>
-
 <form action="record" method="post">
+  <div class="field">
     <!--TODO : autogen ID, and disable? -->
-    ID:<br/>
-    <input type="text" name="id" id="id" placeholder="REQUIRED" required><br/>
-    <br/>
-    <!--FIXME: <button type="Button" onclick="getElementById('id').innerHTML = sails.uuidv4();">Get UUID</button>-->
-    <!--TODO : include required/optional, constraints -->
-    Name:<br/>
-    <input type="text" name="name" placeholder="REQUIRED" required><br/><br/>
-    URL:<br/>
-    <input type="text" name="url"><br/><br/>
-    Latitude:<br/>
-    <input type="text" name="lat"><br/><br/>
-    Longitude:<br/>
-    <input type="text" name="long"><br/><br/>
-    Elevation:<br/>
-    <input type="text" name="ele"><br/><br/>
-    Pose (JSON):<br/>
-    <input type="text" name="pose"><br/><br/>
-    ObjectType
-    <input type="text" name="objectType"><br/><br/>
-    <input type="submit" value="submit">
+    <label class="label">
+      ID:
+    </label>
+    <div class="control">
+      <input
+        class="input" type="text" name="id" id="id" placeholder="REQUIRED"
+        required
+      >
+    </div>
+  </div>
+  
+  <div class="field">
+    <label class="label">
+      Name:
+    </label>
+    <div class="control">
+      <input
+        class="input" type="text" name="name" placeholder="REQUIRED" required
+      >
+    </div>
+  </div>
+  
+  <div class="field">
+    <label class="label">
+      URL:
+    </label>
+    <div class="control">
+      <input
+        class="input" type="text" name="url" placeholder="REQUIRED" required
+      >
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">
+      Latitude:
+    </label>
+    <div class="control">
+      <input class="input" type="text" name="lat">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">
+      Longitude:
+    </label>
+    <div class="control">
+      <input class="input" type="text" name="long">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">
+      Elevation:
+    </label>
+    <div class="control">
+      <input class="input" type="text" name="ele">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">
+      Pose (JSON):
+    </label>
+    <div class="control">
+      <input class="input" type="text" name="pose">
+    </div>
+  </div>
+  <div class="field">
+    <label class="label">
+      ObjectType
+    </label>
+    <div class="control">
+      <input class="input" type="text" name="objectType">
+    </div>
+  </div>
+  
+  <input class="button is-info" type="submit" value="Submit">
 </form>
+
+</div>

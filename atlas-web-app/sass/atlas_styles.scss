@@ -1,37 +1,53 @@
 @charset "utf-8";
 
-// Import a Google Font
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 
-// Set your brand colors
-$purple: #8A4D76;
-$pink: #FA7C91;
-$brown: #757763;
-$beige-light: #D0D1CD;
-$beige-lighter: #EFF0EB;
+// NOTE: ltsyj: the following are my own vars -->
+$mint:       #aaffee;
+$darkmint:   #283b37;
+$tomato:     #b84930;
+$periwinkle: #aaaaff;
+$blush:      #ffaaff;
 
-// Update Bulma's global variables
-$family-sans-serif: "Nunito", sans-serif;
-$grey-dark: $brown;
-$grey-light: $beige-light;
-$primary: $purple;
-$link: $pink;
-$widescreen-enabled: false;
-$fullhd-enabled: false;
+// NOTE: ltsyj: the followng vars are Bulma "initial" vars I want to override
+// This space intentionally blank
 
-// Update some of Bulma's component variables
-$body-background-color: $beige-lighter;
-$control-border-width: 2px;
-$input-border-color: transparent;
-$input-shadow: none;
+//  Needed to know Bulma defined colors
+@import "../node_modules/bulma/sass/utilities/initial-variables.sass";
 
-// Import only what you need from Bulma
-@import "../node_modules/bulma/sass/utilities/_all.sass";
-@import "../node_modules/bulma/sass/base/_all.sass";
-@import "../node_modules/bulma/sass/elements/button.sass";
-@import "../node_modules/bulma/sass/elements/container.sass";
-@import "../node_modules/bulma/sass/elements/title.sass";
-@import "../node_modules/bulma/sass/form/_all.sass";
-@import "../node_modules/bulma/sass/components/navbar.sass";
-@import "../node_modules/bulma/sass/layout/hero.sass";
-@import "../node_modules/bulma/sass/layout/section.sass";
+// NOTE: ltsyj: The following vars are Bulma "derived" which is why they can
+//              be modified after importing "initial" vars -->
+$primary:             $mint;
+$info:                $periwinkle;
+
+$scheme-main:         $black;
+$scheme-main-bis:     $black-bis;
+$scheme-main-ter:     $black-ter;
+$scheme-invert:       $white;
+$scheme-invert-bis:   $white-bis;
+$scheme-invert-ter:   $white-ter;
+$background:          $scheme-main;
+$text:                $grey-lightest;
+$text-light:          $grey-lighter;
+$text-strong:         $white-bis;
+$link:                $periwinkle;
+$link-visited:        $blush;
+$link-hover:          $red;
+
+$navbar-background-color:               $mint;
+$navbar-item-color:                     $black;
+$navbar-dropdown-background-color:      $grey-lighter;
+$navbar-item-hover-color:               $white-ter;
+$navbar-item-hover-background-color:    $tomato;
+$navbar-dropdown-arrow:                 $red;
+
+$footer-background-color: $mint;
+$footer-padding: 1rem 1rem 2.5rem;
+
+$button-focus-color: $white-ter;
+$button-disabled-opacity: 0.2;
+
+@import "../node_modules/bulma/bulma.sass";
+
+.records-pagination {
+  background-color: $darkmint;
+  }
