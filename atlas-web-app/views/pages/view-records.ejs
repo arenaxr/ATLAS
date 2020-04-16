@@ -3,7 +3,6 @@ Start off View Records with first page of records with default page size
 -->
 
 <!--<script type="text/javascript" src="/dependencies/sails.io.js"></script>-->
-
 <script>
   // TODO : figure how to use a listener for Record updates
 
@@ -22,42 +21,14 @@ Start off View Records with first page of records with default page size
   var rn_pg = -1; // this *_pg var is more for post-init stuff...
   var req_pg = getParameterByName('start-pg');
   var goto_pg = -1; // this *_pg var is the page we'll go to for init.
-  
+
   window.onload = function () {
 
-      // TODO : socket code failing specifically, switched to XHR version below
-//    io.socket.get('/record', function gotResponse(body, response) {
-//      //[Deposit dataset in invisible part of doc]
-//      document.getElementById("records-all").innerHTML = JSON.stringify(body);
-//
-//      //[Get dataset from document]
-//      var records = JSON.parse(document.getElementById("records-all").innerHTML);
-//      var last_page = Math.ceil(records.length / recs_per_pg);
-//
-//      console.log("req_pg is str");
-//      req_pg = parseInt(req_pg);
-//      if ( Number.isInteger(req_pg) ) {
-//        console.log("req_pg is int");
-//        if ( req_pg >= 1 && req_pg <= last_page ) {
-//          console.log("req_pg is in page range");
-//          goto_pg = req_pg;
-//        }
-//      } else {
-//        goto_pg = 1;
-//      }
-//
-//      //[Display goto page]
-//      rn_pg = gotoCachedPage(rn_pg, goto_pg, recs_per_pg);
-//      document.getElementById("pg-input").placeholder = rn_pg;
-//
-//      refreshPageNav(last_page, rn_pg);
-//    })
-
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/record' );
+    xhr.open('GET', '/record');
 
     xhr.onload = function () {
-      if ( xhr.readyState == 4 && xhr.status == '200') {
+      if (xhr.readyState == 4 && xhr.status == '200') {
         //[Deposit dataset in invisible part of doc]
         document.getElementById("records-all").innerHTML = xhr.responseText;
 
@@ -65,24 +36,30 @@ Start off View Records with first page of records with default page size
         var records = JSON.parse(document.getElementById("records-all").innerHTML);
         var last_page = Math.ceil(records.length / recs_per_pg);
 
-      console.log("req_pg is str");
-      req_pg = parseInt(req_pg);
-      if ( Number.isInteger(req_pg) ) {
-        console.log("req_pg is int");
-        if ( req_pg >= 1 && req_pg <= last_page ) {
-          console.log("req_pg is in page range");
-          goto_pg = req_pg;
+        console.log("req_pg is str");
+        req_pg = parseInt(req_pg);
+        if (Number.isInteger(req_pg)) {
+          console.log("req_pg is int");
+          if (req_pg >= 1 && req_pg <= last_page) {
+            console.log("req_pg is in page range");
+            goto_pg = req_pg;
+          }
+        } else {
+          goto_pg = 1;
         }
+
+        //[Display goto page]
+        rn_pg = gotoCachedPage(rn_pg, goto_pg, recs_per_pg);
+        document.getElementById("pg-input").placeholder = rn_pg;
+
+        refreshPageNav(last_page, rn_pg);
       } else {
-        goto_pg = 1;
+        // [Set error message and display]
+        console.log("view-record window.on-load GET request had other than 200 status");
       }
-
-      //[Display goto page]
-      rn_pg = gotoCachedPage(rn_pg, goto_pg, recs_per_pg);
-      document.getElementById("pg-input").placeholder = rn_pg;
-
-      refreshPageNav(last_page, rn_pg);
-    }
+    };
+    
+    xhr.send(null);
   };
 
   // TODO : investigate using this for button logic as well?
