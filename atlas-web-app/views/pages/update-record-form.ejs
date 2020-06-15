@@ -197,7 +197,6 @@
         xhr.open('PATCH', '/record/' + input_id.value);
 
         xhr.onload = function () {
-            var record = JSON.parse(xhr.responseText);
             if (xhr.readyState == 4 && xhr.status == '200') {
                 // [Hide find form & update form]
                 find_form.style = "display:none";
