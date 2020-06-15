@@ -142,8 +142,6 @@
             error_section.style = "display:block; color:red";
             return;
         }
-        */
-
 
         // [Construct JSON string of patches entered]
         var patches_json = " {"
@@ -169,6 +167,17 @@
             patches_json += "\n\t\"objectType\": \"" + input_objectType.value + "\"";
         }
         patches_json += "\n}";
+        */
+
+        var patches_json = {
+          "name": input_name.value,
+          "url": input_url.value,
+          "lat": input_lat.value,
+          "long": input_long.value,
+          "ele": input_ele.value,
+          "pose": input_pose.value,
+          "objectType": input_objectType.value,
+        }
 
         // [Update existing record in place]
         var xhr = new XMLHttpRequest();
@@ -198,7 +207,7 @@
         };
 
         xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-        xhr.send(patches_json);
+        xhr.send(JSON.stringify(patches_json));
 
     }
 </script>
