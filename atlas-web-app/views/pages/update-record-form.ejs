@@ -11,6 +11,7 @@
         var error_message = document.getElementById('error-message');
 
         var update_form = document.getElementById('div-update-form');
+        var input_id = document.getElementById('update-form-input-id');
         var input_name = document.getElementById('update-form-input-name');
         var input_url = document.getElementById('update-form-input-url');
         var input_lat = document.getElementById('update-form-input-lat');
@@ -32,6 +33,7 @@
                 var records = JSON.parse(xhr.responseText);
 
                 // [Load update form with current record values]
+                input_id.value = records.id;
                 input_name.value = records.name;
                 input_url.value = records.url;
                 input_lat.value = records.lat;
