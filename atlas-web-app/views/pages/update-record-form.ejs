@@ -33,14 +33,14 @@
                 var records = JSON.parse(xhr.responseText);
 
                 // [Load update form with current record values]
-                input_id.placeholder = records.id;
-                input_name.placeholder = records.name;
-                input_url.placeholder = records.url;
-                input_lat.placeholder = records.lat;
-                input_long.placeholder = records.long;
-                input_ele.placeholder = records.ele;
-                input_pose.placeholder = records.pose;
-                input_objectType.placeholder = records.objectType;
+                input_id.value = records.id;
+                input_name.value = records.name;
+                input_url.value = records.url;
+                input_lat.value = records.lat;
+                input_long.value = records.long;
+                input_ele.value = records.ele;
+                input_pose.value = records.pose;
+                input_objectType.value = records.objectType;
 
                 // [Hide find form, unhide update form and cancel button]
                 find_form.style = "display:none";
@@ -130,6 +130,7 @@
         error_message.innerHTML = "no_error";
         error_section.style = "display:none; color:red";
 
+        /*
         // [Throw error & exit if no changes have been requested]
         if (
           is_value_empty(input_name) && is_value_empty(input_url) &&
@@ -141,6 +142,7 @@
             error_section.style = "display:block; color:red";
             return;
         }
+        */
 
 
         // [Construct JSON string of patches entered]
@@ -202,11 +204,11 @@
 </script>
 
 <div class="section">
-  
+
   <h1 class="title">
     Find Record & Update
   </h1>
-  
+
   <!-- TODO : address that pressing Enter does nothing because no form action -->
   <div class="section" id="div-find-form" style="display:block">
     <form>
@@ -218,7 +220,7 @@
           <input class="input" type="text" name="id" id="find-form-input-id" required>
         </div>
       </div>
-      
+
       <button
         class="button is-info"
         type="button"
@@ -227,14 +229,14 @@
       >
         Find Record
       </button>
-    
+
     </form>
   </div>
-  
+
   <div class="section" id="error-section" style="display:none;color:red">
     <p id="error-message">no_error</p>
   </div>
-  
+
   <div class="section" id="div-update-form" style="display:none">
     <form action="record" method="post">
       <div class="field">
@@ -292,7 +294,7 @@
           Pose:<br/>
         </label>
         <div class="control">
-          <input class="input" type="text" name="pose" id="update-form-input-pose">
+          <textarea class="input" type="text" name="pose" id="update-form-input-pose"></textarea>
         </div>
       </div>
       <div class="field">
