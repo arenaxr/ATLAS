@@ -39,7 +39,7 @@
                 input_lat.value = records.lat;
                 input_long.value = records.long;
                 input_ele.value = records.ele;
-                input_pose.value = records.pose;
+                input_pose.value = JSON.stringify(records.pose, null, 2);
                 input_objectType.value = records.objectType;
 
                 // [Hide find form, unhide update form and cancel button]
