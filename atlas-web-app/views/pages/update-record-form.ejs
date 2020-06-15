@@ -11,7 +11,6 @@
         var error_message = document.getElementById('error-message');
 
         var update_form = document.getElementById('div-update-form');
-        var input_id = document.getElementById('update-form-input-id');
         var input_name = document.getElementById('update-form-input-name');
         var input_url = document.getElementById('update-form-input-url');
         var input_lat = document.getElementById('update-form-input-lat');
@@ -33,7 +32,6 @@
                 var records = JSON.parse(xhr.responseText);
 
                 // [Load update form with current record values]
-                input_id.value = records.id;
                 input_name.value = records.name;
                 input_url.value = records.url;
                 input_lat.value = records.lat;
@@ -80,6 +78,7 @@
         let input_objectType = document.getElementById('update-form-input-objectType');
 
 
+      /*
         // ["Zero out" update form]
         input_id.placeholder = "";
         input_name.placeholder = "";
@@ -89,6 +88,7 @@
         input_ele.placeholder = "";
         input_pose.placeholder = "";
         input_objectType.placeholder = "";
+        */
 
         // [hide update form, unhide find form]
         update_form.style = "display:none";
@@ -181,7 +181,7 @@
 
         // [Update existing record in place]
         var xhr = new XMLHttpRequest();
-        xhr.open('PATCH', '/record/' + input_id.placeholder);
+        xhr.open('PATCH', '/record/' + input_id.value);
 
         xhr.onload = function () {
             var record = JSON.parse(xhr.responseText);
