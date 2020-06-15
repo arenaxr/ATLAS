@@ -78,17 +78,15 @@
         let input_objectType = document.getElementById('update-form-input-objectType');
 
 
-      /*
         // ["Zero out" update form]
-        input_id.placeholder = "";
-        input_name.placeholder = "";
-        input_url.placeholder = "";
-        input_lat.placeholder = "";
-        input_long.placeholder = "";
-        input_ele.placeholder = "";
-        input_pose.placeholder = "";
-        input_objectType.placeholder = "";
-        */
+        input_id.value = "";
+        input_name.value = "";
+        input_url.value = "";
+        input_lat.value = "";
+        input_long.value = "";
+        input_ele.value = "";
+        input_pose.value = "";
+        input_objectType.value = "";
 
         // [hide update form, unhide find form]
         update_form.style = "display:none";
@@ -107,6 +105,15 @@
         return false;
 
     }
+
+  function IsJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
 
 // TODO : could use heavier testing. def. for invalid updates requested!! --ltj
     function updateRecord() {
@@ -129,6 +136,12 @@
         // [Clear error message and hide]
         error_message.innerHTML = "no_error";
         error_section.style = "display:none; color:red";
+
+        if (!IsJsonString(input_pose.value)) {
+          error_message.innerHTML = "Invalid JSON for pose";
+          error_section.style = "display:block; color:red";
+          return;
+        }
 
         /*
         // [Throw error & exit if no changes have been requested]
@@ -175,7 +188,7 @@
           "lat": input_lat.value,
           "long": input_long.value,
           "ele": input_ele.value,
-          "pose": input_pose.value,
+          "pose": JSON.parse(input_pose.value),
           "objectType": input_objectType.value,
         }
 
