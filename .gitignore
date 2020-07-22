@@ -4,3 +4,5 @@ ui-mock-ups/*
 .idea/*
 *.swp
 nohup.out
+start-mongo-redis.sh
+atlas-web-app/assets/images/cya-on-zoom.jpg
