@@ -50,7 +50,8 @@ Start off View Records with first page of records with default page size
 
         //[Display goto page]
         rn_pg = gotoCachedPage(rn_pg, goto_pg, recs_per_pg);
-        document.getElementById("pg-input").placeholder = rn_pg;
+        document.getElementById("pg-input-high").placeholder = rn_pg;
+        document.getElementById("pg-input-low").placeholder = rn_pg;
 
         refreshPageNav(last_page, rn_pg);
       } else {
@@ -66,20 +67,37 @@ Start off View Records with first page of records with default page size
   //        * good if doesn't force more last_page calculation!
   function refreshPageNav(last_page, current_page) {
     if ( current_page === 1 ) {
-      document.getElementById("first-page").disabled = true;
-      document.getElementById("prev-page").disabled = true;
-      document.getElementById("next-page").disabled = false;
-      document.getElementById("last-page").disabled = false;
+      document.getElementById("first-page-high").disabled = true;
+      document.getElementById("prev-page-high").disabled = true;
+      document.getElementById("next-page-high").disabled = false;
+      document.getElementById("last-page-high").disabled = false;
+
+      document.getElementById("first-page-low").disabled = true;
+      document.getElementById("prev-page-low").disabled = true;
+      document.getElementById("next-page-low").disabled = false;
+      document.getElementById("last-page-low").disabled = false;
+      
     } else if ( current_page === last_page ) {
-      document.getElementById("first-page").disabled = false;
-      document.getElementById("prev-page").disabled = false;
-      document.getElementById("next-page").disabled = true;
-      document.getElementById("last-page").disabled = true;
+      document.getElementById("first-page-high").disabled = false;
+      document.getElementById("prev-page-high").disabled = false;
+      document.getElementById("next-page-high").disabled = true;
+      document.getElementById("last-page-high").disabled = true;
+
+      document.getElementById("first-page-low").disabled = false;
+      document.getElementById("prev-page-low").disabled = false;
+      document.getElementById("next-page-low").disabled = true;
+      document.getElementById("last-page-low").disabled = true;
+      
     } else {
-      document.getElementById("first-page").disabled = false;
-      document.getElementById("prev-page").disabled = false;
-      document.getElementById("next-page").disabled = false;
-      document.getElementById("last-page").disabled = false;
+      document.getElementById("first-page-high").disabled = false;
+      document.getElementById("prev-page-high").disabled = false;
+      document.getElementById("next-page-high").disabled = false;
+      document.getElementById("last-page-high").disabled = false;
+
+      document.getElementById("first-page-low").disabled = false;
+      document.getElementById("prev-page-low").disabled = false;
+      document.getElementById("next-page-low").disabled = false;
+      document.getElementById("last-page-low").disabled = false;
     }
   }
 
@@ -117,12 +135,18 @@ Start off View Records with first page of records with default page size
     //[Display last page]
     var new_page = gotoCachedPage(current_page, last_page, recs_per_pg);
 
-    document.getElementById("last-page").disabled = true;
-    document.getElementById("next-page").disabled = true;
-    document.getElementById("pg-input").placeholder = new_page;
-    document.getElementById("prev-page").disabled = false;
-    document.getElementById("first-page").disabled = false;
+    document.getElementById("last-page-high").disabled = true;
+    document.getElementById("next-page-high").disabled = true;
+    document.getElementById("pg-input-high").placeholder = new_page;
+    document.getElementById("prev-page-high").disabled = false;
+    document.getElementById("first-page-high").disabled = false;
 
+    document.getElementById("last-page-low").disabled = true;
+    document.getElementById("next-page-low").disabled = true;
+    document.getElementById("pg-input-low").placeholder = new_page;
+    document.getElementById("prev-page-low").disabled = false;
+    document.getElementById("first-page-low").disabled = false;
+    
     return last_page;
   }
 
@@ -141,17 +165,25 @@ Start off View Records with first page of records with default page size
     var next_page = current_page + 1;
     var new_page = gotoCachedPage(current_page, next_page, recs_per_pg);
 
-    document.getElementById("pg-input").placeholder = new_page;
+    document.getElementById("pg-input-high").placeholder = new_page;
+    document.getElementById("pg-input-low").placeholder = new_page;
+    
     if (new_page === next_page) {
       //[Deactivate "Next" if this is last page]
       if (new_page === last_page) {
-        document.getElementById("last-page").disabled = true;
-        document.getElementById("next-page").disabled = true;
+        document.getElementById("last-page-high").disabled = true;
+        document.getElementById("next-page-high").disabled = true;
+
+        document.getElementById("last-page-low").disabled = true;
+        document.getElementById("next-page-low").disabled = true;
       }
 
       //[Activate "Prev", since there was a "Prev"]
-      document.getElementById("prev-page").disabled = false;
-      document.getElementById("first-page").disabled = false;
+      document.getElementById("prev-page-high").disabled = false;
+      document.getElementById("first-page-high").disabled = false;
+
+      document.getElementById("prev-page-low").disabled = false;
+      document.getElementById("first-page-low").disabled = false;
     }
 
     return new_page;
@@ -168,17 +200,25 @@ Start off View Records with first page of records with default page size
     var prev_page = current_page - 1;
     var new_page = gotoCachedPage(current_page, prev_page, recs_per_pg);
 
-    document.getElementById("pg-input").placeholder = new_page;
+    document.getElementById("pg-input-high").placeholder = new_page;
+    document.getElementById("pg-input-low").placeholder = new_page;
+    
     if (new_page === prev_page) {
       //[Deactivate "Prev" if this is first page]
       if (new_page === 1) {
-        document.getElementById("first-page").disabled = true;
-        document.getElementById("prev-page").disabled = true;
+        document.getElementById("first-page-high").disabled = true;
+        document.getElementById("prev-page-high").disabled = true;
+
+        document.getElementById("first-page-low").disabled = true;
+        document.getElementById("prev-page-low").disabled = true;
       }
 
       //[Activate "Next", since there was a "Next"]
-      document.getElementById("next-page").disabled = false;
-      document.getElementById("last-page").disabled = false;
+      document.getElementById("next-page-high").disabled = false;
+      document.getElementById("last-page-high").disabled = false;
+
+      document.getElementById("next-page-low").disabled = false;
+      document.getElementById("last-page-low").disabled = false;
     }
 
     return new_page;
@@ -193,11 +233,17 @@ Start off View Records with first page of records with default page size
     //[Display first page]
     var new_page = gotoCachedPage(current_page, 1, recs_per_pg);
 
-    document.getElementById("first-page").disabled = true;
-    document.getElementById("prev-page").disabled = true;
-    document.getElementById("pg-input").placeholder = new_page;
-    document.getElementById("next-page").disabled = false;
-    document.getElementById("last-page").disabled = false;
+    document.getElementById("first-page-high").disabled = true;
+    document.getElementById("prev-page-high").disabled = true;
+    document.getElementById("pg-input-high").placeholder = new_page;
+    document.getElementById("next-page-high").disabled = false;
+    document.getElementById("last-page-high").disabled = false;
+    
+    document.getElementById("first-page-low").disabled = true;
+    document.getElementById("prev-page-low").disabled = true;
+    document.getElementById("pg-input-low").placeholder = new_page;
+    document.getElementById("next-page-low").disabled = false;
+    document.getElementById("last-page-low").disabled = false;
 
     return 1;
   }
@@ -226,20 +272,32 @@ Start off View Records with first page of records with default page size
           <nav class="level">
             <div class="level-left">
               <div class="level-item">
-                <button id="first-page" class="button" onclick="rn_pg = firstCachedPageUI(rn_pg, recs_per_pg);" disabled> |<< </button>
-                <button id="prev-page" class="button" onclick="rn_pg = prevCachedPageUI(rn_pg, recs_per_pg);" disabled> < Prev Page </button>
+                <button id="first-page-high" class="button" onclick="rn_pg = firstCachedPageUI(rn_pg, recs_per_pg);" disabled> |<< </button>
+                <button id="prev-page-high" class="button" onclick="rn_pg = prevCachedPageUI(rn_pg, recs_per_pg);" disabled> < </button>
                 <form>
-                <input id="pg-input" name="start-pg" class="input" type="text" size="3" onfocus="this.placeholder='';" onblur="this.placeholder=rn_pg;" placeholder="-1">
+                <input id="pg-input-high" name="start-pg" class="input" type="text" size="3" onfocus="this.placeholder='';" onblur="this.placeholder=rn_pg;" placeholder="-1">
                 </form>
-                <button id="next-page" class="button" onclick="rn_pg = nextCachedPageUI(rn_pg, recs_per_pg);"> Next Page > </button>
-                <button id="last-page" class="button" onclick="rn_pg = lastCachedPageUI(rn_pg, recs_per_pg);"> >>| </button>
+                <button id="next-page-high" class="button" onclick="rn_pg = nextCachedPageUI(rn_pg, recs_per_pg);"> > </button>
+                <button id="last-page-high" class="button" onclick="rn_pg = lastCachedPageUI(rn_pg, recs_per_pg);"> >>| </button>
               </div>
             </div>
           </nav>
     
           <p id='records-output'></p>
     
-          <!-- TODO : insert pagination nav here, below pages -->
+          <nav class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <button id="first-page-low" class="button" onclick="rn_pg = firstCachedPageUI(rn_pg, recs_per_pg);" disabled> |<< </button>
+                <button id="prev-page-low" class="button" onclick="rn_pg = prevCachedPageUI(rn_pg, recs_per_pg);" disabled> < </button>
+                <form>
+                  <input id="pg-input-low" name="start-pg" class="input" type="text" size="3" onfocus="this.placeholder='';" onblur="this.placeholder=rn_pg;" placeholder="-1">
+                </form>
+                <button id="next-page-low" class="button" onclick="rn_pg = nextCachedPageUI(rn_pg, recs_per_pg);"> > </button>
+                <button id="last-page-low" class="button" onclick="rn_pg = lastCachedPageUI(rn_pg, recs_per_pg);"> >>| </button>
+              </div>
+            </div>
+          </nav>
           
         </div>
 
