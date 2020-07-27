@@ -21,6 +21,8 @@ module.exports = {
       } else {
         console.log('google credentials');
         console.log(user);
+        req.session.authenticated = true;
+        req.session.user = user;
         res.json(user);
       }
     })(req, res, next);
