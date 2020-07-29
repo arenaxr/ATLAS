@@ -47,6 +47,12 @@ module.exports = {
       required: false,
     },
 
+    radius: {
+      type: 'number',
+      required: false,
+      defaultsTo: 500
+    },
+
     pose: {
       type: 'json',
       required: false,
