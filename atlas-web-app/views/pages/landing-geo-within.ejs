@@ -1,0 +1,123 @@
+<!--
+Meant to be a landing pad from a QR code to automatically start a request for
+client's GPS coords to find nearby ARENA scenes
+-->
+<script>
+window.onload = function() {
+    locationSearch();
+};
+</script>
+<!-- *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- -->
+<div class="content">
+  <div class="section">
+    <p> Auto-geolocating overlapping scenes ... </p>
+    <p> Refresh your browser to geolocate overlapping scenes again. </p>
+  </div>
+</div>
+
+<div class="modal" id="geo_results">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+        <div class="card">
+            <header class="card-header">
+                <p class="card-header-title">ATLAS Results</p>
+            </header>
+            <div class="card-content" id="modal-content">
+                <table class="table is-hoverable is-fullwidth">
+                    <thead>
+                    <th>
+                        ID
+                    </th>
+                    <th>
+                        Distance
+                    </th>
+                    </thead>
+                    <tbody id="modal-table">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+</div>
+<script>
+     // Modals
+    var openModal;
+    document.addEventListener('DOMContentLoaded', function () {
+        var rootEl = document.documentElement;
+        var $modals = getAll('.modal');
+        var $modalButtons = getAll('.modal-button');
+        var $modalCloses = getAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button');
+
+        if ($modalButtons.length > 0) {
+            $modalButtons.forEach(function ($el) {
+                $el.addEventListener('click', function () {
+                    var target = $el.dataset.target;
+                    openModal(target);
+                });
+            });
+        }
+
+        if ($modalCloses.length > 0) {
+            $modalCloses.forEach(function ($el) {
+                $el.addEventListener('click', function () {
+                    closeModals();
+                });
+            });
+        }
+
+        openModal = (target) => {
+            var $target = document.getElementById(target);
+            rootEl.classList.add('is-clipped');
+            $target.classList.add('is-active');
+        }
+
+        function closeModals() {
+            rootEl.classList.remove('is-clipped');
+            $modals.forEach(function ($el) {
+                $el.classList.remove('is-active');
+            });
+        }
+
+        document.addEventListener('keydown', function (event) {
+            var e = event || window.event;
+            if (e.keyCode === 27) {
+                closeModals();
+            }
+        });
+
+        function getAll(selector) {
+            return Array.prototype.slice.call(document.querySelectorAll(selector), 0);
+        }
+    });
+     function locationSearch() {
+         if (navigator.geolocation) {
+             navigator.geolocation.getCurrentPosition(async (position) => {
+                 let coords = position.coords;
+                 let url = `/lookup/geo-within?lat=${coords.latitude}&long=${coords.longitude}`;
+                 let modalContent = document.getElementById('modal-content');
+                 let modalTable = document.getElementById('modal-table')
+                 try {
+                     const response = await fetch(url);
+                     const jsonResponse = await response.json();
+                     modalTable.innerHTML = '';
+                     if (jsonResponse.length === 0) {
+                       modalTable.innerHTML = '<tr><td>No overlapping scenes.</td></tr>';
+                     } else {
+                         for (let i = 0, responses = jsonResponse.length; i < responses; i++) {
+                            let row = `<tr><td><a href="${jsonResponse[i].url}">${jsonResponse[i].name}</a></td><td>${jsonResponse[i].distance}</td></tr>`;
+                            modalTable.insertAdjacentHTML('beforeend', row);
+                         }
+                     }
+                     openModal('geo_results');
+                 } catch (err) {
+                     modalContent.innerHTML = "<p>Geo lookup error</p>";
+                     openModal('geo_results');
+                 }
+             });
+         } else {
+             alert("Geolocation is not supported by this browser.");
+         }
+     }
+</script>

@@ -19,8 +19,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/landing-geo-loc-near' },
+  '/': { view: 'pages/landing-geo-within' },
   '/landing-geo-loc-near': { view: 'pages/landing-geo-loc-near' },
+  '/landing-geo-within': { view: 'pages/landing-geo-within' },
   '/home': { view: 'pages/homepage' },
   '/portal': { view: 'pages/portal' },
   '/go': {view: 'pages/portal' },
@@ -34,6 +35,7 @@ module.exports.routes = {
 
   'GET /redirect/:id': { action: 'record/redirect-id' },
   'GET /lookup/geo': { action: 'record/geo-radius' },
+  'GET /lookup/geo-within': { action: 'record/geo-within' },
   'GET /lookup/prox/:id': { action: 'record/id-radius' },
 
   /***************************************************************************
