@@ -22,4 +22,8 @@ module.exports.custom = {
   redis: {
     geokey: 'atlas'
   },
+
+  geo: {
+    ly: 9460800000000000 //One (1) lightyear in meters. Exorbitant, but not absolute max for geographic calculations
+  },
 };

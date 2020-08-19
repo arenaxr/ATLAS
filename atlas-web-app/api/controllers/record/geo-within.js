@@ -48,13 +48,13 @@ module.exports = {
     await sails.getDatastore('redis').leaseConnection(async (db) => {
       rval_ga = await (util.promisify(db.geoadd).bind(db))(key, inputs.long, inputs.lat, 'UserLoc');
     });
-    console.log("geoadd UserLoc rval: " + rval_ga);
+    //console.log("geoadd UserLoc rval: " + rval_ga);
 
     //[Iterate over georecords, storing scenes that overlap lat,long]
-    georecords.forEach(checkContainment);
+    await georecords.forEach(checkContainment);
 
     async function checkContainment(value, index, array) {
-      console.log("here (checkContainment (for " + value + ") )");
+      //console.log("here (checkContainment (for " + value + ") )");
 
       let delta = "";
 
@@ -62,25 +62,28 @@ module.exports = {
       let record = await Record.findOne({
         id: value
       });
-      console.log("Radius for record: " + record.radius);
+      //console.log("Radius for record: " + record.radius);
 
       //[Find distance between UserLoc and this geographic scene]
       await sails.getDatastore('redis').leaseConnection(async (db) => {
         delta = await (util.promisify(db.geodist).bind(db))(key, value, 'UserLoc');
       });
-      console.log("str delta: " + delta);
+      //console.log("str delta: " + delta);
       delta = parseFloat(delta);
-      console.log("num delta: " + delta);
+      //console.log("num delta: " + delta);
 
       //[Add Record to results if UserLoc within it]
       if( delta <= record.radius ){
         record.distance = delta;
         results.push(record);
         console.log("Record added to results!");
+        console.log(results);
       }
     }
 
-
-    return results;
+    await console.log(results);
+    let json_results = await JSON.stringify(results);
+    //await console.log(json_results);
+    return json_results;
   }
 };

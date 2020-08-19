@@ -100,7 +100,10 @@ window.onload = function() {
                  let modalTable = document.getElementById('modal-table')
                  try {
                      const response = await fetch(url);
+                     console.log(response);
                      const jsonResponse = await response.json();
+                     console.log(jsonResponse);
+
                      modalTable.innerHTML = '';
                      if (jsonResponse.length === 0) {
                        modalTable.innerHTML = '<tr><td>No entries found within specified radius</td></tr>';
