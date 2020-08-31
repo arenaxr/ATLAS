@@ -1,7 +1,3 @@
-<!--
-Meant to be a landing pad from a QR code to automatically start a request for
-client's GPS coords to find nearby ARENA scenes
--->
 <script>
 window.onload = function() {
     locationSearch();
@@ -92,6 +88,8 @@ window.onload = function() {
         }
     });
      function locationSearch() {
+         console.log("locationSearch() page function START");
+
          if (navigator.geolocation) {
              navigator.geolocation.getCurrentPosition(async (position) => {
                  let coords = position.coords;
@@ -122,5 +120,8 @@ window.onload = function() {
          } else {
              alert("Geolocation is not supported by this browser.");
          }
+
+
+         console.log("locationSearch() page function END");
      }
 </script>

@@ -26,64 +26,26 @@ module.exports = {
 
   fn: async function (inputs) {
 
+    console.log("geo-within API call START")
+
     let key = sails.config.custom.redis.geokey;
-    console.log('sails redis geo key: ' + key);
     let georecords = [];
     let results = [];
 
-
-
-    //[Remove temporary member UserLoc]
+    //[Get all records with geo coords using ridiculous radius of 1 lightyear ]
     await sails.getDatastore('redis').leaseConnection(async (db) => {
-      await (util.promisify(db.zrem).bind(db))(key, 'UserLoc');
+      georecords = await (util.promisify(db.georadius).bind(db))(key, inputs.long, inputs.lat, sails.config.custom.geo.ly, 'm', 'WITHDIST', 'ASC');
     });
 
-    //[Get all geographic entities before adding temporary "UserLoc" entry]
-    await sails.getDatastore('redis').leaseConnection(async (db) => {
-      georecords = await (util.promisify(db.zrange).bind(db))(key, 0, -1);
-    });
+    console.log(georecords);
 
-    let rval_ga = "";
-    //[Add temporary member to sails geo key to easily use GEODIST]
-    await sails.getDatastore('redis').leaseConnection(async (db) => {
-      rval_ga = await (util.promisify(db.geoadd).bind(db))(key, inputs.long, inputs.lat, 'UserLoc');
-    });
-    //console.log("geoadd UserLoc rval: " + rval_ga);
+    // [ Get all ATLAS records ]
 
-    //[Iterate over georecords, storing scenes that overlap lat,long]
-    await georecords.forEach(checkContainment);
 
-    async function checkContainment(value, index, array) {
-      //console.log("here (checkContainment (for " + value + ") )");
+    //DEBUG
+    console.log(results);
+    console.log("geo-within API call END")
 
-      let delta = "";
-
-      //[Get ATLAS record of georecord]
-      let record = await Record.findOne({
-        id: value
-      });
-      //console.log("Radius for record: " + record.radius);
-
-      //[Find distance between UserLoc and this geographic scene]
-      await sails.getDatastore('redis').leaseConnection(async (db) => {
-        delta = await (util.promisify(db.geodist).bind(db))(key, value, 'UserLoc');
-      });
-      //console.log("str delta: " + delta);
-      delta = parseFloat(delta);
-      //console.log("num delta: " + delta);
-
-      //[Add Record to results if UserLoc within it]
-      if( delta <= record.radius ){
-        record.distance = delta;
-        results.push(record);
-        console.log("Record added to results!");
-        console.log(results);
-      }
-    }
-
-    await console.log(results);
-    let json_results = await JSON.stringify(results);
-    //await console.log(json_results);
-    return json_results;
+    return results;
   }
 };

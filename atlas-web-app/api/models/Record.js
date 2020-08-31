@@ -104,5 +104,25 @@ module.exports = {
       mongoRecords[i].distance = distances[mongoRecords[i].id] + ' ' + units;
     }
     return mongoRecords;
+  },
+
+
+  filterOOBResults: async (geoArr, units, ignore, filter) => {
+    let ids = [];
+    let distances = {};
+    for (let i = 0, len = geoArr.length; i < len; i++) {
+      if (geoArr[i][0] === ignore) { continue; }
+      ids.push(geoArr[i][0]);
+      distances[geoArr[i][0]] = geoArr[i][1];
+    }
+    let query = { id: ids };
+    if (filter) {
+      Object.assign(query, filter);
+    }
+    let mongoRecords = await Record.find(query);
+    for (let i = 0, len = mongoRecords.length; i < len; i++) {
+      mongoRecords[i].distance = distances[mongoRecords[i].id] + ' ' + units;
+    }
+    return mongoRecords;
   }
 };
