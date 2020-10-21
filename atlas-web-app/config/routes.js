@@ -36,6 +36,9 @@ module.exports.routes = {
   'GET /lookup/geo': { action: 'record/geo-radius' },
   'GET /lookup/prox/:id': { action: 'record/id-radius' },
 
+  'GET /auth/google':                {controller: 'PassportController', action: 'googleAuth'},
+  'GET /auth/google/callback':       {controller: 'PassportController', action: 'googleCallback'},
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *

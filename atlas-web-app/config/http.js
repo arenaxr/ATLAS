@@ -21,6 +21,9 @@ module.exports.http = {
   ****************************************************************************/
 
   middleware: {
+    // Per https://dev.to/christianstrang/sailsjs-use-passportjs-to-login-with-google-oauth-2-0-3daf
+    passportInit: require('passport').initialize(),
+    passportSession: require('passport').session(),
 
     /***************************************************************************
     *                                                                          *
@@ -29,17 +32,18 @@ module.exports.http = {
     *                                                                          *
     ***************************************************************************/
 
-    // order: [
-    //   'cookieParser',
-    //   'session',
-    //   'bodyParser',
-    //   'compress',
-    //   'poweredBy',
-    //   'router',
-    //   'www',
-    //   'favicon',
-    // ],
-
+    order: [
+      'cookieParser',
+      'session',
+      'passportInit',
+      'passportSession',
+      'bodyParser',
+      'compress',
+      'poweredBy',
+      'router',
+      'www',
+      'favicon',
+    ],
 
     /***************************************************************************
     *                                                                          *
