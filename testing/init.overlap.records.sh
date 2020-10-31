@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # NOTE: ensure the port is correct for your Sails setup!
-port=9001
+port=1337
 
 #World global test scene
 curl -u conix:conix "http://localhost:$port/record/create?id=16d17442-cb51-4005-a068-378e48a1ad5a&name=world-global&lat=85.0&long=-135.0&ele=0&radius=999999999999999&url=https://xr.andrew.cmu.edu/?name=%26mqttServer=oz.andrew.cmu.edu%26scene=render%26theme=starry&objectType=scene"
