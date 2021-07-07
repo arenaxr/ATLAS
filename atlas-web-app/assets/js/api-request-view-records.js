@@ -83,6 +83,7 @@ function fillRecords(value) {
   document.getElementById('records-output').innerHTML = document.getElementById('records-output').innerHTML + 'Latitude: ' + value.lat + '<br>';
   document.getElementById('records-output').innerHTML = document.getElementById('records-output').innerHTML + 'Longitude: ' + value.long + '<br>';
   document.getElementById('records-output').innerHTML = document.getElementById('records-output').innerHTML + 'Elevation: ' + value.ele + '<br>';
+  document.getElementById('records-output').innerHTML = document.getElementById('records-output').innerHTML + 'Radius: ' + value.radius + '<br>';
   document.getElementById('records-output').innerHTML = document.getElementById('records-output').innerHTML + 'Pose: ' + value.pose + '<br>';
   document.getElementById('records-output').innerHTML = document.getElementById('records-output').innerHTML + 'objectType: ' + value.objectType + '<br><br>';
 }

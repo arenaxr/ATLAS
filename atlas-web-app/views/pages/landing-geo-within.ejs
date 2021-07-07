@@ -1,17 +1,13 @@
-<!--
-Meant to be a landing pad from a QR code to automatically start a request for
-client's GPS coords to find nearby ARENA scenes
--->
 <script>
 window.onload = function() {
-  locationSearch();
+    locationSearch();
 };
 </script>
 <!-- *-*-*-*-*-*-*-*-*-*-*-*-*-*-*-*- -->
 <div class="content">
   <div class="section">
-    <p> Auto-geolocating near scenes ... </p>
-    <p> Refresh your browser to geolocate near scenes again. </p>
+    <p> Auto-geolocating overlapping scenes ... </p>
+    <p> Refresh your browser to geolocate overlapping scenes again. </p>
   </div>
 </div>
 
@@ -92,10 +88,12 @@ window.onload = function() {
         }
     });
      function locationSearch() {
+         console.log("locationSearch() page function START");
+
          if (navigator.geolocation) {
              navigator.geolocation.getCurrentPosition(async (position) => {
                  let coords = position.coords;
-                 let url = `/lookup/geo?lat=${coords.latitude}&long=${coords.longitude}&distance=200&units=m`;
+                 let url = `/lookup/geo-within?lat=${coords.latitude}&long=${coords.longitude}`;
                  let modalContent = document.getElementById('modal-content');
                  let modalTable = document.getElementById('modal-table')
                  try {
@@ -106,7 +104,7 @@ window.onload = function() {
 
                      modalTable.innerHTML = '';
                      if (jsonResponse.length === 0) {
-                       modalTable.innerHTML = '<tr><td>No entries found within specified radius</td></tr>';
+                       modalTable.innerHTML = '<tr><td>No overlapping scenes.</td></tr>';
                      } else {
                          for (let i = 0, responses = jsonResponse.length; i < responses; i++) {
                             let row = `<tr><td><a href="${jsonResponse[i].url}">${jsonResponse[i].name}</a></td><td>${jsonResponse[i].distance}</td></tr>`;
@@ -122,5 +120,8 @@ window.onload = function() {
          } else {
              alert("Geolocation is not supported by this browser.");
          }
+
+
+         console.log("locationSearch() page function END");
      }
 </script>
